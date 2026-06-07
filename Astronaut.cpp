@@ -8,7 +8,7 @@
 Astronaut::Astronaut()
 {
     health_=100;
-    stamina_=100;
+    energy_=100;
     oxygen_=100;
 }
 
@@ -32,11 +32,11 @@ void Astronaut::setOxygen(int value)
     oxygen_=(value < 0) ? 0 : value;
 }
 
-int Astronaut::getStamina() const
+int Astronaut::getEnergy() const
 {
-    return stamina_;
+    return energy_;
 }
-void Astronaut::setStamina(int value)
+void Astronaut::setEnergy(int value)
 {
-    stamina_=(value < 0) ? 0 : value;
+    energy_=(value < 0) ? 0 : value;
 }

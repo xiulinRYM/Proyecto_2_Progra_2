@@ -16,15 +16,15 @@ class Astronaut
     void move(std::string destination);
     [[nodiscard]] int getHealth()const;
     [[nodiscard]] int getOxygen()const;
-    [[nodiscard]] int getStamina()const;
+    [[nodiscard]] int getEnergy()const;
     void setHealth(int value);
     void setOxygen(int value);
-    void setStamina(int value);
+    void setEnergy(int value);
     ~Astronaut()=default;
     private:
     int health_;
     int oxygen_;
-    int stamina_;
+    int energy_;
 
 };
 
