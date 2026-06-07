@@ -1,0 +1,42 @@
+//
+// Created by xiuli on 7/6/2026.
+//
+
+#include "Astronaut.h"
+#include "Item.h"
+
+Astronaut::Astronaut()
+{
+    health_=100;
+    stamina_=100;
+    oxygen_=100;
+}
+
+int Astronaut::getHealth() const
+{
+    return health_;
+}
+
+void Astronaut::setHealth(int value)
+{
+    health_=(value < 0) ? 0 : value;
+}
+
+int Astronaut::getOxygen() const
+{
+    return oxygen_;
+}
+
+void Astronaut::setOxygen(int value)
+{
+    oxygen_=(value < 0) ? 0 : value;
+}
+
+int Astronaut::getStamina() const
+{
+    return stamina_;
+}
+void Astronaut::setStamina(int value)
+{
+    stamina_=(value < 0) ? 0 : value;
+}
