@@ -3,3 +3,10 @@
 //
 
 #include "OxygenTank.h"
+
+#include "Astronaut.h"
+
+void OxygenTank::use(Astronaut& astronaut)
+{
+    astronaut.setOxygen(astronaut.getOxygen()+30);
+}
