@@ -3,6 +3,9 @@
 //
 
 #include "Astronaut.h"
+
+#include <stdexcept>
+
 #include "Item.h"
 #include "Inventory.h"
 
@@ -71,12 +74,20 @@ void Astronaut::move(Module* target)
 
 void Astronaut::takeItem(Item* item)
 {
-//no inventory created
+inventory_->addItem(item);
 }
 
-void Astronaut::useItem(Item* item)
+void Astronaut::useItem(int pos)
 {
-//no inventory created
+    if (pos < 0 || pos >= (int)inventory_->getSize()) {
+        throw std::out_of_range("Invalid inventory position");
+    }
+    Item* item = inventory_->getItem(pos);
+    if (item == nullptr) {
+        throw std::runtime_error("Item is null");
+    }
+    item->use(*this);
+    inventory_->removeItem(pos);
 }
 
 

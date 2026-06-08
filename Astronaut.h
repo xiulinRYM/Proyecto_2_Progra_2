@@ -15,7 +15,7 @@ class Astronaut
 {
     public:
     Astronaut();
-    void useItem(Item* item);
+    void useItem(int pos);
     void takeItem(Item* item);
     void move(Module* target);
     [[nodiscard]] int getHealth()const;

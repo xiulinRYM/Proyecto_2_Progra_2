@@ -15,7 +15,8 @@ class Inventory
     void addItem(Item* item);
     Item* getItem(int pos);
     void removeItem(int pos);
-    
+    int getSize();
+
     private:
     std::vector<Item* > items_;
 };
