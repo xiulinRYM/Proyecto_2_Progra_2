@@ -74,6 +74,10 @@ void Astronaut::move(Module* target)
 
 void Astronaut::takeItem(Item* item)
 {
+    if (item == nullptr)
+    {
+        throw std::invalid_argument("cannot take a null item");
+    }
 inventory_->addItem(item);
 }
 
