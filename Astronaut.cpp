@@ -65,7 +65,7 @@ void Astronaut::setCurrentModule(Module* module)
 
 void Astronaut::move(Module* target)
 {
-    // TODO: verify target is connected to currentModule_
+    //  verify target is connected to currentModule_
     setCurrentModule(target);
 }
 
