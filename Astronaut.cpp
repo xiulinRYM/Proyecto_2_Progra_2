@@ -19,7 +19,10 @@ int Astronaut::getHealth() const
 
 void Astronaut::setHealth(int value)
 {
-    health_=(value < 0) ? 0 : value;
+    if (value < 0) health_ = 0;
+    else if (value > 130) health_=130;
+    else health_=value;
+
 }
 
 int Astronaut::getOxygen() const
@@ -29,7 +32,9 @@ int Astronaut::getOxygen() const
 
 void Astronaut::setOxygen(int value)
 {
-    oxygen_=(value < 0) ? 0 : value;
+    if (value < 0) oxygen_ = 0;
+    else if (value > 130) oxygen_ = 130;
+    else oxygen_ = value;
 }
 
 int Astronaut::getEnergy() const
@@ -38,7 +43,9 @@ int Astronaut::getEnergy() const
 }
 void Astronaut::setEnergy(int value)
 {
-    energy_=(value < 0) ? 0 : value;
+    if (value < 0) energy_ = 0;
+    else if (value > 130) energy_ = 130;
+    else energy_ = value;
 }
 
 void Astronaut::applyDamage(int amount)

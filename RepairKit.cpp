@@ -4,9 +4,15 @@
 
 #include "RepairKit.h"
 
+#include <stdexcept>
+
 #include "Astronaut.h"
 
 void RepairKit::use(Astronaut& astronaut)
 {
-    astronaut.setHealth(astronaut.getHealth()+20);
+    int newValue = astronaut.getHealth() + 20;
+    if (newValue > 130) {
+        throw std::overflow_error("Health already at maximum capacity");
+    }
+    astronaut.setHealth(newValue);
 }

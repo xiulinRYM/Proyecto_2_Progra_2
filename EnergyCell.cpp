@@ -4,9 +4,15 @@
 
 #include "EnergyCell.h"
 
+#include <stdexcept>
+
 #include "Astronaut.h"
 
 void EnergyCell::use(Astronaut& astronaut)
 {
-    astronaut.setEnergy(astronaut.getEnergy()+25);
+    int newValue = astronaut.getEnergy() + 25;
+    if (newValue > 130) {
+        throw std::overflow_error("Energy already at maximum capacity");
+    }
+    astronaut.setEnergy(newValue);
 }
