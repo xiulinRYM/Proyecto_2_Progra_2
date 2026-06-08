@@ -4,13 +4,10 @@
 
 #include "Astronaut.h"
 #include "Item.h"
+#include "Inventory.h"
 
-Astronaut::Astronaut()
-{
-    health_=100;
-    energy_=100;
-    oxygen_=100;
-}
+Astronaut::Astronaut(): currentModule_(nullptr),inventory_(std::make_unique<Inventory>()), health_(100), oxygen_(100) , energy_(100)
+{}
 
 int Astronaut::getHealth() const
 {
@@ -40,3 +37,4 @@ void Astronaut::setEnergy(int value)
 {
     energy_=(value < 0) ? 0 : value;
 }
+
