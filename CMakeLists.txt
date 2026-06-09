@@ -8,4 +8,6 @@ add_executable(Proyecto_2_Progra_2 main.cpp
         include/Event.h
         include/Fire.h
         src/Fire.cpp
+        include/MeteorStrike.h
+        src/MeteorStrike.cpp
 )
