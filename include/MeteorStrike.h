@@ -1,4 +1,3 @@
-// MeteorStrike.h
 #ifndef METEORSTRIKE_H
 #define METEORSTRIKE_H
 

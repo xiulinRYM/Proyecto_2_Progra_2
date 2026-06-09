@@ -10,4 +10,6 @@ add_executable(Proyecto_2_Progra_2 main.cpp
         src/Fire.cpp
         include/MeteorStrike.h
         src/MeteorStrike.cpp
+        include/PowerFailure.h
+        src/PowerFailure.cpp
 )
