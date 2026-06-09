@@ -12,4 +12,6 @@ add_executable(Proyecto_2_Progra_2 main.cpp
         src/MeteorStrike.cpp
         include/PowerFailure.h
         src/PowerFailure.cpp
+        include/OxygenLeak.h
+        src/OxygenLeak.cpp
 )
