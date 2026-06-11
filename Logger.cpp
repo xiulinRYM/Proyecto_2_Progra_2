@@ -14,13 +14,17 @@ void Logger::writeEntry(const std::string& entry) {
     std::cout << entry<<std::endl;
 }
 
+void Logger::writeHeader() {
+    writeEntry("=== SIMULATION STARTED ===");
+}
+
 void Logger::exportToFile() const {
     std::ofstream file(logFileName);
     if (!file.is_open()) {
         throw std::runtime_error("Error opening log file");
     }
     file<<"==================="<<std::endl;
-    file<< " Adventure Report "<<etd::endl;
+    file << " Adventure Report " << std::endl;
     file<<"==================="<<std::endl;
 
     for (int i = 0; i < eventLog.size(); i++) {

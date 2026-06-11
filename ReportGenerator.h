@@ -5,9 +5,6 @@
 #ifndef PROYECTO_2_PROGRA_2_REPORTGNERATOR_H
 #define PROYECTO_2_PROGRA_2_REPORTGNERATOR_H
 
-#ifndef REPORTGENERATOR_H
-#define REPORTGENERATOR_H
-
 #include <string>
 #include <vector>
 #include "Logger.h"
@@ -31,8 +28,5 @@ private:
 
     std::string buildReport() const;
 };
-
-#endif
-
 
 #endif //PROYECTO_2_PROGRA_2_REPORTGNERATOR_H

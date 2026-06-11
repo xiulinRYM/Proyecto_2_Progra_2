@@ -13,6 +13,7 @@ class Logger {
     void writeEntry(const std::string& entry);
     void exportToFile() const;
     const std::vector<std::string>& getLog() const;
+    void writeHeader();
 private:
     std::vector<std::string> eventLog;
     std::string logFileName;

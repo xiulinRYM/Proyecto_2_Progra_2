@@ -5,6 +5,8 @@
 #include "ReportGenerator.h"
 #include <fstream>
 #include <iostream>
+#include <vector>
+#include <exception>
 
 ReportGenerator::ReportGenerator(const std::string& fileName) {
     reportFileName = fileName;
@@ -49,7 +51,7 @@ void ReportGenerator::saveToFile() const {
     std::ofstream file(reportFileName);
 
     if (!file.is_open()) {
-        std::cerr << "Error: Could not open report file." << std::endl;
+        throw std::runtime_error("Could not open report file");
         return;
     }
 

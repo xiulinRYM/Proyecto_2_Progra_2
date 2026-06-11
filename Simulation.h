@@ -14,23 +14,23 @@
 
 class Simulation {
 public:
-    Simulation(Astronaut* astronaut, int maxOP=10);
+    Simulation(Astronaut* astronaut, int maxTurns = 10);
     ~Simulation();
-    void runSimulatiom(GameUI* gameUI);
+    void runSimulation(GameUI& ui);
 
 private:
     Astronaut* astronaut;
-    int maxOP;
+    int maxTurns;
+    int currentTurn;
+    int modulesVisited;
+    bool isRunning;
     Logger* logger;
     ReportGenerator* reportGenerator;
-    bool isrunning;
-    int currentOp;
-    int modulesVisited;
-    void processTurn(int choise);
-    bool checkDefeatCondition()const ;
-    bool checkVictoryCondition() const;
-    void endSimulation();
 
+    void processTurn(int choice, GameUI& ui);
+    bool checkDefeatCondition() const;
+    bool checkVictoryCondition() const;
+    void endSimulation(GameUI& ui);
 };
 
 
