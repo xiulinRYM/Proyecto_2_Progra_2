@@ -1,6 +1,7 @@
 #pragma once
 #include "Module.h"
 #include <string>
+#include <map>
 
 class SpaceStation {
     map<std::string, Module*> stationMap_;

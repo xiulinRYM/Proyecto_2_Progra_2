@@ -10,6 +10,8 @@ class Module {
     std::vector<Item*> items_;
     std::vector<Event*> activeEvents_;
 public:
+    Module(std::string name);
+    void addItem(Item* item);
     void addConnection(Module* module);
     void triggerEvent(Event* event);
     int getIntegrity();
