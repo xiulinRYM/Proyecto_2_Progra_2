@@ -13,9 +13,9 @@ class Inventory
     public:
     Inventory()= default;
     void addItem(Item* item);
-    Item* getItem(int pos) const;
+    [[nodiscard]]Item* getItem(int pos) const;
     void removeItem(int pos);
-    int getSize() const;
+    [[nodiscard]]int getSize() const;
 
     private:
     std::vector<Item* > items_;
