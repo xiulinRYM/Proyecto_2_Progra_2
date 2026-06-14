@@ -8,9 +8,11 @@ class SpaceStation {
     int totalOxygen_;
     int totalEnergy_;
 public:
+    SpaceStation();
     void loadStationData(std::string file);
-    Module* getModule(std::string moduleName);
+    Module* getModule(const std::string &moduleName);
+    void addModule(Module* module);
     void CalculateSystemStatus();
     std::map<std::string, Module*> getAllModules();
-    bool isOperational();
+    bool isOperational() const;
 };

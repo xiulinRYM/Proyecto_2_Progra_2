@@ -3,21 +3,20 @@
 #include "../../include/astronaut/items/Item.h"
 #include <vector>
 #include <string>
-#include <algorithm>
 
 class Module {
 
 public:
-    Module(std::string name);
+    explicit Module(const std::string &name);
     void addItem(Item* item);
     void addConnection(Module* module);
     void triggerEvent(Event* event);
-    int getIntegrity();
+    int getIntegrity() const;
     void setIntegrity(int integrity);
     std::string getName();
     std::vector<Item*> getItems();
     std::vector<Module*> getConnectedModules();
-    bool isDestroyed();
+    bool isDestroyed() const;
     void removeItem(Item* item);
 
 private:
