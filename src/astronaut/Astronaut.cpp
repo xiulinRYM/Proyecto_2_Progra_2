@@ -75,7 +75,21 @@ void Astronaut::setCurrentModule(Module* module)
 
 void Astronaut::move(Module* target)
 {
-    //  verify target is connected to currentModule_
+    if (target == nullptr) {
+        throw std::invalid_argument("Target module cannot be null");
+    }
+    if (currentModule_ != nullptr) {
+        bool connected = false;
+        for (Module* m : currentModule_->getConnectedModules()) {
+            if (m == target) {
+                connected = true;
+                break;
+            }
+        }
+        if (!connected) {
+            throw std::invalid_argument("Target module is not connected to current module");
+        }
+    }
     setCurrentModule(target);
 }
 
