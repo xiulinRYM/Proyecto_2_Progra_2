@@ -2,7 +2,7 @@
 // Created by danie on 11/6/2026.
 //
 
-#include "../../Simulation.h"
+#include "../../include/simulator/Simulation.h"
 #include <iostream>
 
 Simulation::Simulation(Astronaut* astronaut, int maxTurns) {

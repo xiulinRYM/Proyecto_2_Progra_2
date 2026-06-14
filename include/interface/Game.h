@@ -8,7 +8,7 @@
 
 #include "../simulator/Simulation.h"
 #include "GameUI.h"
-#include "Astronaut.h"
+#include "../astronaut/Astronaut.h"
 
 class Game {
 public:

@@ -2,7 +2,7 @@
 // Created by danie on 11/6/2026.
 //
 
-#include "../../Logger.h"
+#include "../../include/simulator/Logger.h"
 #include <fstream>
 #include <iostream>
 #include <stdexcept>

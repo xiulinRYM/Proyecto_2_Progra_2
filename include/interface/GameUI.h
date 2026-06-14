@@ -7,7 +7,7 @@
 
 
 #include <string>
-#include "Astronaut.h"
+#include "../astronaut/Astronaut.h"
 
 class GameUI {
 public:

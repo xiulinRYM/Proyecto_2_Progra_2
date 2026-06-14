@@ -9,7 +9,7 @@
 #include <string>
 #include "Logger.h"
 #include "ReportGenerator.h"
-#include "Astronaut.h"
+#include "../astronaut/Astronaut.h"
 #include "../interface/GameUI.h"
 
 class Simulation {

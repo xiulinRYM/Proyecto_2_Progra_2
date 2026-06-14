@@ -4,13 +4,13 @@
 
 #ifndef PROYECTO_2_PROGRA_2_ASTRONAUT_H
 #define PROYECTO_2_PROGRA_2_ASTRONAUT_H
+#include "Inventory.h"
 #include <memory>
 #include <vector>
 #include <string>
 
 class Module;
 class Item;
-class Inventory;
 
 class Astronaut
 {
