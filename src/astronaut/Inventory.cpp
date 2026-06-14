@@ -2,8 +2,7 @@
 // Created by xiuli on 7/6/2026.
 //
 
-#include "../../Inventory.h"
-
+#include "../../include/astronaut/Inventory.h"
 #include <stdexcept>
 
 void Inventory::addItem(Item* item)
@@ -27,5 +26,5 @@ Item* Inventory::getItem(int pos) const
 
 int Inventory::getSize() const
 {
-    return items_.size();
+    return static_cast<int>(items_.size());
 }

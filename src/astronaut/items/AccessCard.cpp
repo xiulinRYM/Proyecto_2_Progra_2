@@ -2,7 +2,8 @@
 // Created by xiuli on 7/6/2026.
 //
 
-#include "../../AccessCard.h"
+#include "../../../include/astronaut/items/AccessCard.h"
+#include "../../../include/astronaut/Astronaut.h"
 
 void AccessCard::use(Astronaut& astronaut)
 {

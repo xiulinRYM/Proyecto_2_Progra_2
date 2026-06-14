@@ -1,17 +1,39 @@
-cmake_minimum_required(VERSION 4.1.2)
+cmake_minimum_required(VERSION 3.20)
 project(Proyecto_2_Progra_2)
-include_directories(include)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(Proyecto_2_Progra_2 main.cpp
-        include/Events/Event.h
-        include/Events/Fire.h
+include_directories(include)
+
+add_executable(Proyecto_2_Progra_2
+        main.cpp
+
+        # Astronaut
+        src/astronaut/Astronaut.cpp
+        src/astronaut/Inventory.cpp
+
+        # Items
+        src/astronaut/items/EnergyCell.cpp
+        src/astronaut/items/OxygenTank.cpp
+        src/astronaut/items/RepairKit.cpp
+        src/astronaut/items/AccessCard.cpp
+
+        # Events
         src/events/Fire.cpp
-        include/Events/MeteorStrike.h
         src/events/MeteorStrike.cpp
-        include/Events/PowerFailure.h
         src/events/PowerFailure.cpp
-        include/Events/OxygenLeak.h
         src/events/OxygenLeak.cpp
+
+        # World
+        src/world/Module.cpp
+        src/world/SpaceStation.cpp
+
+        # Simulator
+        src/simulator/Logger.cpp
+        src/simulator/ReportGenerator.cpp
+        src/simulator/Simulation.cpp
+
+        # Interface
+        src/interface/Game.cpp
+        src/interface/GameUI.cpp
 )
