@@ -2,7 +2,8 @@
 #define POWERFAILURE_H
 
 #include "Event.h"
-#include "Astronaut.h"
+class Astronaut;
+class Module;
 
 class PowerFailure : public Event {
 public:

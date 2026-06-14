@@ -2,7 +2,7 @@
 #define EVENT_H
 
 #include <string>
-#include "Astronaut.h"
+class Astronaut;
 
 class Event {
 protected:

@@ -2,8 +2,8 @@
 #define FIRE_H
 
 #include "Event.h"
-#include "Astronaut.h"
-#include "Module.h"
+class Astronaut;
+class Module;
 
 class Fire : public Event {
 public:

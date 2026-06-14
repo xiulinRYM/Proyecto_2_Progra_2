@@ -2,7 +2,8 @@
 #define OXYGENLEAK_H
 
 #include "Event.h"
-#include "Astronaut.h"
+class Astronaut;
+class Module;
 
 class OxygenLeak : public Event {
 public:

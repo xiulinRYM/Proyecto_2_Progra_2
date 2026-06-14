@@ -2,8 +2,8 @@
 #define METEORSTRIKE_H
 
 #include "Event.h"
-#include "Astronaut.h"
-#include "Module.h"
+class Astronaut;
+class Module;
 
 class MeteorStrike : public Event {
 public:
