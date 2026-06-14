@@ -1,6 +1,6 @@
 #include "Fire.h"
 
-void Fire::execute(Astronaut& a) override {
+void Fire::execute(Astronaut& a) {
     if (!isResolved) {
         a.setHealth(a.getHealth() - 5);
         a.setOxygen(a.getOxygen() - 10);

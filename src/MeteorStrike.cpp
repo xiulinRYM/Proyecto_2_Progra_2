@@ -1,6 +1,6 @@
 #include "MeteorStrike.h"
 
-void MeteorStrike::execute(Astronaut& a) override {
+void MeteorStrike::execute(Astronaut& a) {
     if (!isResolved) {
         Module* currentModule = a.getCurrentModule();
         if (currentModule != nullptr) {
