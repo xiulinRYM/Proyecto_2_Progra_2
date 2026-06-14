@@ -2,7 +2,7 @@
 // Created by danie on 11/6/2026.
 //
 
-#include "GameUI.h"
+#include "../../GameUI.h"
 #include "Astronaut.h"
 #include<iostream>
 

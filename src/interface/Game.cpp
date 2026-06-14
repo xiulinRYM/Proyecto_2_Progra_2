@@ -2,7 +2,7 @@
 // Created by danie on 11/6/2026.
 //
 
-#include "Game.h"
+#include "../../include/interface/Game.h"
 #include <iostream>
 
 Game::Game(int maxTurns) {

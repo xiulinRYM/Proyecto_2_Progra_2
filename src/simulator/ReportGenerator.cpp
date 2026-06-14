@@ -2,7 +2,7 @@
 // Created by danie on 11/6/2026.
 //
 
-#include "ReportGenerator.h"
+#include "../../ReportGenerator.h"
 #include <fstream>
 #include <iostream>
 #include <vector>

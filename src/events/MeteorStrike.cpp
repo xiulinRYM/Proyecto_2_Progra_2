@@ -1,4 +1,4 @@
-#include "MeteorStrike.h"
+#include "../../include/events/MeteorStrike.h"
 
 void MeteorStrike::execute(Astronaut& a) override {
     if (!isResolved) {

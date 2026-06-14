@@ -6,7 +6,7 @@
 #define PROYECTO_2_PROGRA_2_GAME_H
 
 
-#include "Simulation.h"
+#include "../simulator/Simulation.h"
 #include "GameUI.h"
 #include "Astronaut.h"
 

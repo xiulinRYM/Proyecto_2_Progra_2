@@ -4,7 +4,7 @@
 
 #ifndef PROYECTO_2_PROGRA_2_ACCESSCARD_H
 #define PROYECTO_2_PROGRA_2_ACCESSCARD_H
-#include "Item.h"
+#include "../../Item.h"
 
 
 class AccessCard:public Item

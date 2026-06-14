@@ -2,12 +2,12 @@
 // Created by xiuli on 7/6/2026.
 //
 
-#include "Astronaut.h"
+#include "../../Astronaut.h"
 
 #include <stdexcept>
 
-#include "Item.h"
-#include "Inventory.h"
+#include "../../Item.h"
+#include "../../Inventory.h"
 
 Astronaut::Astronaut(): currentModule_(nullptr),inventory_(std::make_unique<Inventory>()), health_(100), oxygen_(100) , energy_(100)
 {}

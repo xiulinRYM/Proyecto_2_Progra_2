@@ -4,7 +4,7 @@
 
 #ifndef PROYECTO_2_PROGRA_2_ENERGYCELL_H
 #define PROYECTO_2_PROGRA_2_ENERGYCELL_H
-#include "Item.h"
+#include "../../Item.h"
 
 
 class EnergyCell:public Item

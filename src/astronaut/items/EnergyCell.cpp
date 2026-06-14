@@ -2,7 +2,7 @@
 // Created by xiuli on 7/6/2026.
 //
 
-#include "EnergyCell.h"
+#include "../../EnergyCell.h"
 
 #include <stdexcept>
 

@@ -10,7 +10,7 @@
 #include "Logger.h"
 #include "ReportGenerator.h"
 #include "Astronaut.h"
-#include "GameUI.h"
+#include "../interface/GameUI.h"
 
 class Simulation {
 public:

@@ -1,4 +1,4 @@
-#include "PowerFailure.h"
+#include "../../include/events/PowerFailure.h"
 
 void PowerFailure::execute(Astronaut& a) override {
     if (!isResolved) {

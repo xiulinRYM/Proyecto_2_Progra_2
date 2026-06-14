@@ -1,4 +1,4 @@
-#include "Fire.h"
+#include "../../include/events/Fire.h"
 
 void Fire::execute(Astronaut& a) override {
     if (!isResolved) {
