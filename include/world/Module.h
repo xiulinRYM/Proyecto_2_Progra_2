@@ -1,14 +1,12 @@
 #pragma once
-#include "Event.h"
-#include "Item.h"
+#include "../events/Event.h"
+#include "../../include/astronaut/items/Item.h"
 #include <vector>
+#include <string>
+#include <algorithm>
 
 class Module {
-    std::string name_;
-    int integrity_;
-    std::vector<Module*> connectedModules_;
-    std::vector<Item*> items_;
-    std::vector<Event*> activeEvents_;
+
 public:
     Module(std::string name);
     void addItem(Item* item);
@@ -21,4 +19,11 @@ public:
     std::vector<Module*> getConnectedModules();
     bool isDestroyed();
     void removeItem(Item* item);
+
+private:
+    std::string name_;
+    int integrity_;
+    std::vector<Module*> connectedModules_;
+    std::vector<Item*> items_;
+    std::vector<Event*> activeEvents_;
 };

@@ -1,4 +1,4 @@
-#include "Module.h"
+#include "../../include/world/Module.h"
 
 Module::Module(std::string name) : name_(name), integrity_(100) {}
 

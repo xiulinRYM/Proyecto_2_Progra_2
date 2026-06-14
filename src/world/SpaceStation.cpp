@@ -1,10 +1,10 @@
-#include "SpaceStation.h"
+#include "../../include/world/SpaceStation.h"
 
 Module* SpaceStation::getModule(std::string moduleName) {
     return modules_[moduleName];
 }
 
-map<std::string, Module*> SpaceStation::getAllModules() {
+std::map<std::string, Module*> SpaceStation::getAllModules() {
     return modules_;
 }
 
