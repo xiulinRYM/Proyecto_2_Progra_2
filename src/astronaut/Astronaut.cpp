@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include "../../include/astronaut/Astronaut.h"
 #include "../../include/astronaut/items/Item.h"
+#include "../../include/astronaut/Inventory.h"
 #include "../../include/world/Module.h"
 
 Astronaut::Astronaut(): currentModule_(nullptr),inventory_(std::make_unique<Inventory>()), health_(100), oxygen_(100) , energy_(100)

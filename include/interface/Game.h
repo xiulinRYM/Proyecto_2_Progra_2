@@ -9,19 +9,20 @@
 #include "../simulator/Simulation.h"
 #include "GameUI.h"
 #include "../astronaut/Astronaut.h"
+#include <memory>
 
 class Game {
 public:
     Game(int maxTurns = 10);
-    ~Game();
+    ~Game()=default;
     void init();
     void start();
 
 private:
-    Astronaut* astronaut;
-    Simulation* simulation;
-    GameUI* ui;
-    int maxTurns;
+    std::unique_ptr<Astronaut> astronaut_;
+    std::unique_ptr<Simulation> simulation_;
+    std::unique_ptr<GameUI> ui_;
+    int maxTurns_;
 };
 
 

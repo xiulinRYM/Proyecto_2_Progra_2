@@ -5,30 +5,21 @@
 #include "../../include/interface/Game.h"
 #include <iostream>
 
-Game::Game(int maxTurns) {
-    this->maxTurns = maxTurns;
-    this->astronaut = nullptr;
-    this->simulation = nullptr;
-    this->ui = nullptr;
-}
 
-Game::~Game() {
-    delete astronaut;
-    delete simulation;
-    delete ui;
-}
+Game::Game(int maxTurns) : maxTurns_(maxTurns)
+{}
 
 void Game::init() {
-    astronaut = new Astronaut();
-    ui = new GameUI();
-    simulation = new Simulation(astronaut, maxTurns);
+    astronaut_ = std::make_unique<Astronaut>();
+    ui_ = std::make_unique<GameUI>();
+    simulation_ = std::make_unique<Simulation>(astronaut_.get(), maxTurns_);
 }
 
 void Game::start() {
-    if (astronaut == nullptr || simulation == nullptr || ui == nullptr) {
+    if (!astronaut_ || !simulation_ || !ui_) {
         std::cerr << "Error: Game not initialized. "
                   << "Call init() before start()." << std::endl;
         return;
     }
-    simulation->runSimulation(*ui);
+    simulation_->runSimulation(*ui_);
 }
