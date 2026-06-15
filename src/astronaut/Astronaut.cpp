@@ -93,13 +93,11 @@ void Astronaut::move(Module* target)
     setCurrentModule(target);
 }
 
-void Astronaut::takeItem(Item* item)
+void Astronaut::takeItem(std::unique_ptr<Item> item)
 {
     if (item == nullptr)
-    {
         throw std::invalid_argument("cannot take a null item");
-    }
-inventory_->addItem(item);
+    inventory_->addItem(std::move(item));
 }
 
 void Astronaut::useItem(int pos)
