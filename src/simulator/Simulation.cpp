@@ -5,6 +5,8 @@
 #include "../../include/simulator/Simulation.h"
 #include <iostream>
 
+#include "world/Module.h"
+
 Simulation::Simulation(Astronaut* astronaut, int maxTurns) {
     this->astronaut = astronaut;
     this->maxTurns = maxTurns;
@@ -25,13 +27,13 @@ void Simulation::processTurn(int choice, GameUI& ui) {
 
     switch (choice) {
         case 1:
-            entry += "Astronaut moved to " + astronaut->getCurrentModuleName();
+            entry += "Astronaut moved to " + astronaut->getCurrentModule()->getName();
             break;
         case 2:
             entry += "Astronaut used an item";
             break;
         case 3:
-            entry += "Astronaut inspected module: " + astronaut->getCurrentModuleName();
+            entry += "Astronaut inspected module: " + astronaut->getCurrentModule()->getName();
             break;
         case 4:
             entry += "Astronaut waited";
