@@ -24,16 +24,27 @@ std::string Module::getName() {
     return name_;
 }
 
-void Module::addItem(Item* item) {
-    items_.push_back(item);
+void Module::addItem(std::unique_ptr<Item> item) {
+    items_.push_back(std::move(item));
 }
 
-std::vector<Item*> Module::getItems() {
-    return items_;
+std::vector<Item*> Module::getItems() const {
+    std::vector<Item*> result;
+    for (const auto& item : items_){
+        result.push_back(item.get());
+    }
+    return result;
 }
 
-void Module::removeItem(Item* item) {
-    std::erase(items_, item);
+std::unique_ptr<Item> Module::extractItem(const Item* item) {
+    for (auto it = items_.begin(); it != items_.end(); ++it) {
+        if (it->get() == item) {
+            std::unique_ptr<Item> extractedItem = std::move(*it);
+            items_.erase(it);
+            return extractedItem;
+        }
+    }
+    return nullptr;
 }
 
 bool Module::isDestroyed() const {
