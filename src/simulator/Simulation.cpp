@@ -48,14 +48,38 @@ void Simulation::processTurn(int choice, GameUI& ui) {
             entry += "Astronaut moved to " + caseNameModule();
             break;
         case 2:
-
-            // aun da error
-            entry += "Astronaut used an item";
+            if (astronaut->getInventory()->getSize() > 0) {
+                ui.showInventory(*astronaut);
+                std::cout << "Select item: ";
+                int op;
+                std::cin >> op;
+                std::string itemName = astronaut->getInventory()->getItem(op-1)->getName();
+                astronaut->useItem(op-1);
+                entry += "Astronaut used " + itemName;
+            } else {
+                ui.showMessage("Inventory is empty.");
+            }
             break;
         case 3:
-            // le falta
+            if (astronaut->getCurrentModule() == nullptr) {
+                ui.showMessage("No current module.");
+            } else {
+                std::cout << astronaut->getCurrentModule()->getName() << std::endl;
+                std::cout << astronaut->getCurrentModule()->getIntegrity() << std::endl;
+                std::vector<Item*> items = astronaut->getCurrentModule()->getItems();
+                for (int i = 0; i < items.size(); i++) {
+                    std::cout << " " << i+1 << ". " << items[i]->getName() << std::endl;
+                }
+                int op;
+                std::cout << "Select item number to take (0 to skip): " << std::endl;
+                std::cin >> op;
+                if (op >= 1 && op <= (int)items.size()) {
+                    astronaut->getCurrentModule()->extractItem(items[op-1]);
+                }
+            }
             entry += "Astronaut inspected module: " + caseNameModule();
             break;
+
         case 4:
             entry += "Astronaut waited";
             break;
