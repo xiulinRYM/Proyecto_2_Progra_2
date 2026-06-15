@@ -9,6 +9,7 @@
 #include "../simulator/Simulation.h"
 #include "GameUI.h"
 #include "../astronaut/Astronaut.h"
+#include"../world/SpaceStation.h"
 #include <memory>
 
 class Game {
@@ -22,6 +23,7 @@ private:
     std::unique_ptr<Astronaut> astronaut_;
     std::unique_ptr<Simulation> simulation_;
     std::unique_ptr<GameUI> ui_;
+    std::unique_ptr<SpaceStation> spaceStation_;
     int maxTurns_;
 };
 

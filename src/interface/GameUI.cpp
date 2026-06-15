@@ -7,11 +7,12 @@
 #include "../../include/world/Module.h"
 #include<iostream>
 
-void GameUI::showStatus(const Astronaut &astronaut, int currentTurn, int maxTurns) const {
+void GameUI::showStatus(const Astronaut &astronaut, SpaceStation& spaceStation, int currentTurn, int maxTurns) const {
     std::cout<<std::endl;
     std::cout << "=======================================" << std::endl;
     std::cout << " TURN " << currentTurn << " / " << maxTurns << std::endl;
     std::cout << "=======================================" << std::endl;
+    std::cout << " Space Station: " << (spaceStation.isOperational() ? "OPERATIONAL" : "INOPERATIVE") << std::endl;
     std::cout << " Location : " << (astronaut.getCurrentModule() ? astronaut.getCurrentModule()->getName() : "None") << std::endl;
     std::cout << " Health : " << astronaut.getHealth() << std::endl;
     std::cout << " Oxygen : " << astronaut.getOxygen() << std::endl;
@@ -19,7 +20,7 @@ void GameUI::showStatus(const Astronaut &astronaut, int currentTurn, int maxTurn
     std::cout << "=======================================" << std::endl;
 
 }
-void GameUI::showMenu() const {
+void GameUI::showMenu(const Astronaut& astronaut) const {
     std::cout<<std::endl;
     std::cout << "=====================================" << std::endl;
     std::cout << " Welcome " << std::endl;

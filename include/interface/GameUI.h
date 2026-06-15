@@ -8,11 +8,12 @@
 
 #include <string>
 #include "../astronaut/Astronaut.h"
+#include "../world/SpaceStation.h"
 
 class GameUI {
 public:
-    void showStatus(const Astronaut& astronaut, int currentTurn,int maxTurns) const;
-    void showMenu() const;
+    void showStatus(const Astronaut& astronaut, SpaceStation& spaceStation, int currentTurn,int maxTurns) const;
+    void showMenu(const Astronaut& astronaut ) const;
     void showMessage(const std::string& message) const;
     int getPlayerInput() const;
 };

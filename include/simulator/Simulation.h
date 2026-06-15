@@ -11,10 +11,11 @@
 #include "ReportGenerator.h"
 #include "../astronaut/Astronaut.h"
 #include "../interface/GameUI.h"
+#include "../world/SpaceStation.h"
 
 class Simulation {
 public:
-    Simulation(Astronaut* astronaut, int maxTurns = 10);
+    Simulation(Astronaut* astronaut, SpaceStation* spacestation, int maxTurns = 10);
     ~Simulation();
     void runSimulation(GameUI& ui);
 
@@ -26,11 +27,13 @@ private:
     bool isRunning;
     Logger* logger;
     ReportGenerator* reportGenerator;
+    SpaceStation* spaceStation;
 
     void processTurn(int choice, GameUI& ui);
     bool checkDefeatCondition() const;
     bool checkVictoryCondition() const;
     void endSimulation(GameUI& ui);
+    std::string caseNameModule();
 };
 
 

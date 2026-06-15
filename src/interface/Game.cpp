@@ -11,8 +11,9 @@ Game::Game(int maxTurns) : maxTurns_(maxTurns)
 
 void Game::init() {
     astronaut_ = std::make_unique<Astronaut>();
+    spaceStation_ = std::make_unique<SpaceStation>();
     ui_ = std::make_unique<GameUI>();
-    simulation_ = std::make_unique<Simulation>(astronaut_.get(), maxTurns_);
+    simulation_ = std::make_unique<Simulation>(astronaut_.get(), spaceStation_.get(), maxTurns_);
 }
 
 void Game::start() {
