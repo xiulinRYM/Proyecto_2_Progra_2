@@ -4,11 +4,12 @@
 
 #include "../../include/simulator/Simulation.h"
 #include <iostream>
+//#include "world/Module.h"
+#include "../../include/world/Module.h"
 
-#include "world/Module.h"
-
-Simulation::Simulation(Astronaut* astronaut, int maxTurns) {
+Simulation::Simulation(Astronaut* astronaut, SpaceStation* spaceStation, int maxTurns) {
     this->astronaut = astronaut;
+    this-> spaceStation = spaceStation;
     this->maxTurns = maxTurns;
     this->currentTurn = 1;
     this->modulesVisited = 1;
@@ -27,13 +28,33 @@ void Simulation::processTurn(int choice, GameUI& ui) {
 
     switch (choice) {
         case 1:
-            entry += "Astronaut moved to " + astronaut->getCurrentModule()->getName();
+            if (astronaut->getCurrentModule() == nullptr) {
+                std::cout << " No current module" << std::endl;
+            } else {
+                std::vector<Module*> connected = astronaut->getCurrentModule()->getConnectedModules();
+                for (int i = 0; i < connected.size(); i++) {
+                    std::cout << " " << i+1 << ". " << connected[i]->getName() << std::endl;
+
+                }
+                int op;
+                std::cout << "Select a module"<<std::endl;
+                std::cin>>op;
+                if (op < 1 || op > (int)connected.size()) {
+                    ui.showMessage("Invalid selection. Staying in current module.");
+                    break;
+                }
+                astronaut->move(connected[op - 1]);
+            }
+            entry += "Astronaut moved to " + caseNameModule();
             break;
         case 2:
+
+            // aun da error
             entry += "Astronaut used an item";
             break;
         case 3:
-            entry += "Astronaut inspected module: " + astronaut->getCurrentModule()->getName();
+            // le falta
+            entry += "Astronaut inspected module: " + caseNameModule();
             break;
         case 4:
             entry += "Astronaut waited";
@@ -52,6 +73,10 @@ bool Simulation::checkDefeatCondition() const {
 
 bool Simulation::checkVictoryCondition() const {
     return currentTurn >= maxTurns && astronaut->isAlive();
+}
+
+std::string Simulation::caseNameModule() {
+    return astronaut->getCurrentModule() ? astronaut->getCurrentModule()->getName() : "UNKNOWN";
 }
 
 void Simulation::endSimulation(GameUI& ui) {
@@ -79,8 +104,8 @@ void Simulation::runSimulation(GameUI& ui) {
     ui.showMessage("=== SIMULATION STARTED ===");
 
     while (isRunning && currentTurn <= maxTurns) {
-        ui.showStatus(*astronaut, currentTurn, maxTurns);
-        ui.showMenu();
+        ui.showStatus(*astronaut, *spaceStation,currentTurn, maxTurns);
+        ui.showMenu(*astronaut);
 
         int choice = ui.getPlayerInput();
         processTurn(choice, ui);

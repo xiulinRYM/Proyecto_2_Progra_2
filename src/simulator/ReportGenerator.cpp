@@ -52,7 +52,6 @@ void ReportGenerator::saveToFile() const {
 
     if (!file.is_open()) {
         throw std::runtime_error("Could not open report file");
-        return;
     }
 
     file << buildReport();

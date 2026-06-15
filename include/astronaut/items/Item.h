@@ -10,6 +10,7 @@ class Item
 {
     public:
     Item(std::string name):name_(std::move(name)){}
+    [[nodiscard]] std::string getName() const{return name_;};
     virtual void use(Astronaut&)=0;
     virtual ~Item()=default;
     protected:

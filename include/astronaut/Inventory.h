@@ -4,6 +4,7 @@
 
 #ifndef PROYECTO_2_PROGRA_2_INVENTORY_H
 #define PROYECTO_2_PROGRA_2_INVENTORY_H
+#include <memory>
 #include <vector>
 class Item;
 
@@ -12,13 +13,14 @@ class Inventory
 {
     public:
     Inventory()= default;
-    void addItem(Item* item);
+    void addItem(std::unique_ptr<Item> item);
     [[nodiscard]]Item* getItem(int pos) const;
     void removeItem(int pos);
     [[nodiscard]]int getSize() const;
+    [[nodiscard]] std::vector<std::string> getItemNames() const;
 
     private:
-    std::vector<Item* > items_;
+    std::vector<std::unique_ptr<Item> > items_;
 };
 
 
