@@ -1,6 +1,8 @@
+#include <utility>
+
 #include "../../include/world/Module.h"
 
-Module::Module(const std::string &name) : name_(name), integrity_(100) {}
+Module::Module(std::string name) : name_(std::move(name)), integrity_(100) {}
 
 void Module::addConnection(Module* module) {
     connectedModules_.push_back(module);
@@ -14,7 +16,7 @@ int Module::getIntegrity() const {
     return integrity_;
 }
 
-void Module::setIntegrity(int integrity) {
+void Module::setIntegrity(const int integrity) {
     integrity_ = integrity;
 }
 
@@ -38,4 +40,8 @@ bool Module::isDestroyed() const {
     return integrity_ <= 0;
 }
 
-void triggerEvent(Event* event);
+void Module::triggerEvent(Astronaut *a) const {
+    for (Event* event : activeEvents_) {
+        event->execute(*a);
+    }
+}

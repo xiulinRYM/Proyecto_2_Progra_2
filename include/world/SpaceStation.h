@@ -5,8 +5,7 @@
 
 class SpaceStation {
     std::map<std::string, Module*> stationMap_;
-    int totalOxygen_;
-    int totalEnergy_;
+    int totalIntegrity_;
 public:
     SpaceStation();
     void loadStationData(std::string file);
@@ -14,5 +13,5 @@ public:
     void addModule(Module* module);
     void CalculateSystemStatus();
     std::map<std::string, Module*> getAllModules();
-    bool isOperational() const;
+    [[nodiscard]] bool isOperational() const;
 };

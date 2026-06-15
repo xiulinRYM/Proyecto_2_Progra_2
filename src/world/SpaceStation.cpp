@@ -1,7 +1,6 @@
 #include "../../include/world/SpaceStation.h"
-#include "../../include/astronaut/items/Item.h"
 
-SpaceStation::SpaceStation() : totalOxygen_(100), totalEnergy_(100) {}
+SpaceStation::SpaceStation() : totalIntegrity_(100) {}
 
 Module* SpaceStation::getModule(const std::string &moduleName) {
     if (stationMap_.contains(moduleName)) {
@@ -37,20 +36,11 @@ void SpaceStation::addModule(Module* module) {
 }
 
 void SpaceStation::CalculateSystemStatus() {
-    totalOxygen_ = 0;
-    totalEnergy_ = 0;
+    totalIntegrity_ = 0;
     for (const auto& m : stationMap_) {
-        for (const auto& item : m.second->getItems()) {
-
-            if (item->getType() == "Oxygen") {
-                totalOxygen_ += item->getQuantity();
-            } else if (item->getType() == "Energy") {
-                totalEnergy_ += item->getQuantity();
-            }
-        }
+        totalIntegrity_ += m.second->getIntegrity();
     }
 }
 
 void SpaceStation::loadStationData(std::string file) {
- //Falta
 }
