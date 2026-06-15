@@ -15,8 +15,8 @@ public:
     void showStatus(const Astronaut& astronaut, SpaceStation& spaceStation, int currentTurn,int maxTurns) const;
     void showMenu(const Astronaut& astronaut ) const;
     void showMessage(const std::string& message) const;
-    void GameUI::showInventory(const Astronaut& astronaut) const;
-    int getPlayerInput() const;
+    void showInventory(const Astronaut& astronaut) const;
+    [[nodiscard]] int getPlayerInput() const;
 };
 
 
