@@ -79,7 +79,7 @@ int Module::getActiveEventCount() const {
     return activeEvents_.size();
 }
 
-void Module::resolveEvent(int index) {
+void Module::resolveEvent(const int index) {
     if (index < 0 || index >= (int)activeEvents_.size()) return;
     activeEvents_[index]->resolve();
     activeEvents_.erase(activeEvents_.begin() + index);

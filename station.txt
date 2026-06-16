@@ -12,8 +12,4 @@ ITEM;Laboratory;OxygenTank
 ITEM;Engine_Room;RepairTool
 ITEM;Medical_Bay;RepairKit
 
-EVENT;Bridge;Fire
-EVENT;Engine_Room;MeteorStrike
-EVENT;Medical_Bay;OxygenLeak
-
 START;Bridge
