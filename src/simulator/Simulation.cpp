@@ -216,12 +216,17 @@ void Simulation::triggerRandomEvent(GameUI& ui) {
   int rep = ui.getPlayerDecision();
 
     if (rep == 1 && astronaut->getCurrentModule() != nullptr) {
-        astronaut->getCurrentModule()->setIntegrity(astronaut->getCurrentModule()->getIntegrity() + 10);
-        astronaut->applyDamage(5);
-        astronaut->applyEnergyDrain(5);
-        ui.showMessage("Module repaired. You lost 5 HP and 5 Energy.");
-        logger->writeEntry("Player repaired module manually.");
-    } else {
+        if (astronaut->getEnergy() < 5) {
+            ui.showMessage("Not enough energy to repair!");
+            logger->writeEntry("Repair failed: not enough energy.");
+        } else {
+            astronaut->getCurrentModule()->setIntegrity(astronaut->getCurrentModule()->getIntegrity() + 10);
+            astronaut->applyDamage(5);
+            astronaut->applyEnergyDrain(5);
+            ui.showMessage("Module repaired. You lost 5 HP and 5 Energy.");
+            logger->writeEntry("Player repaired module manually.");
+        }
+    }else {
         ui.showMessage("Repair skipped.");
         if (astronaut->getCurrentModule() != nullptr)
         {
@@ -238,11 +243,15 @@ void Simulation::triggerRandomEvent(GameUI& ui) {
             ui.showMessage("Repair? Costs 5 HP and 5 Energy. (1=Yes, 2=Skip all, 0=Skip)");
             int r = ui.getPlayerDecision();;
             if (r == 1) {
-                mod->resolveEvent(i);
-                astronaut->applyDamage(5);
-                astronaut->applyEnergyDrain(5);
-                ui.showMessage("Event resolved. You lost 5 HP and 5 Energy.");
-                logger->writeEntry("Player resolved active event.");
+                if (astronaut->getEnergy() < 5) {
+                    ui.showMessage("Not enough energy to repair!");
+                } else {
+                    mod->resolveEvent(i);
+                    astronaut->applyDamage(5);
+                    astronaut->applyEnergyDrain(5);
+                    ui.showMessage("Event resolved. You lost 5 HP and 5 Energy.");
+                    logger->writeEntry("Player resolved active event.");
+                }
             } else if (r == 2) {
                 break;
             } else {
