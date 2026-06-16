@@ -4,14 +4,13 @@
 
 #include "../../include/simulator/Simulation.h"
 #include <iostream>
-//#include "world/Module.h"
 #include "../../include/world/Module.h"
 #include <cstdlib>
 #include <ctime>
 
 Simulation::Simulation(Astronaut* astronaut, SpaceStation* spaceStation, int maxTurns) {
     this->astronaut = astronaut;
-    this-> spaceStation = spaceStation;
+    this->spaceStation = spaceStation;
     this->maxTurns = maxTurns;
     this->currentTurn = 1;
     this->modulesVisited = 1;
@@ -32,43 +31,59 @@ void Simulation::processTurn(int choice, GameUI& ui) {
     switch (choice) {
         case 1:
             if (astronaut->getCurrentModule() == nullptr) {
-                std::cout << " No current module" << std::endl;
+                ui.showMessage("No current module.");
             } else {
                 std::vector<Module*> connected = astronaut->getCurrentModule()->getConnectedModules();
+                if (connected.empty()) {
+                    ui.showMessage("No connected modules available.");
+                    break;
+                }
                 for (int i = 0; i < connected.size(); i++) {
                     std::cout << " " << i+1 << ". " << connected[i]->getName() << std::endl;
-
                 }
                 int op;
-                std::cout << "Select a module"<<std::endl;
-                std::cin>>op;
+                std::cout << "Select a module" << std::endl;
+                std::cin >> op;
+                if (std::cin.fail()) {
+                    std::cin.clear();
+                    std::cin.ignore(1000, '\n');
+                    ui.showMessage("Invalid input.");
+                    break;
+                }
                 if (op < 1 || op > (int)connected.size()) {
                     ui.showMessage("Invalid selection. Staying in current module.");
                     break;
                 }
                 astronaut->move(connected[op - 1]);
+                modulesVisited++;
             }
             entry += "Astronaut moved to " + caseNameModule();
             break;
+
         case 2:
             if (astronaut->getInventory()->getSize() > 0) {
                 ui.showInventory(*astronaut);
                 std::cout << "Select item: ";
                 int op;
                 std::cin >> op;
+                if (std::cin.fail()) {
+                    std::cin.clear();
+                    std::cin.ignore(1000, '\n');
+                    ui.showMessage("Invalid input.");
+                    break;
+                }
                 if (op >= 1 && op <= (int)astronaut->getInventory()->getSize()) {
                     std::string itemName = astronaut->getInventory()->getItem(op-1)->getName();
                     astronaut->useItem(op-1);
                     entry += "Astronaut used " + itemName;
-                }
-                else {
+                } else {
                     ui.showMessage("Invalid selection.");
                 }
-
             } else {
                 ui.showMessage("Inventory is empty.");
             }
             break;
+
         case 3:
             if (astronaut->getCurrentModule() == nullptr) {
                 ui.showMessage("No current module.");
@@ -82,6 +97,12 @@ void Simulation::processTurn(int choice, GameUI& ui) {
                 int op;
                 std::cout << "Select item number to take (0 to skip): " << std::endl;
                 std::cin >> op;
+                if (std::cin.fail()) {
+                    std::cin.clear();
+                    std::cin.ignore(1000, '\n');
+                    ui.showMessage("Invalid input.");
+                    break;
+                }
                 if (op >= 1 && op <= (int)items.size()) {
                     std::string takenName = items[op-1]->getName();
                     auto extracted = astronaut->getCurrentModule()->extractItem(items[op-1]);
@@ -142,12 +163,19 @@ void Simulation::runSimulation(GameUI& ui) {
     ui.showMessage("=== SIMULATION STARTED ===");
 
     while (isRunning && currentTurn <= maxTurns) {
-        ui.showStatus(*astronaut, *spaceStation,currentTurn, maxTurns);
+        ui.showStatus(*astronaut, *spaceStation, currentTurn, maxTurns);
         ui.showMenu(*astronaut);
 
         int choice = ui.getPlayerInput();
         processTurn(choice, ui);
-        triggerRandomEvent();
+        triggerRandomEvent(ui);
+
+        if (astronaut->getCurrentModule() != nullptr &&
+            astronaut->getCurrentModule()->isDestroyed()) {
+            ui.showMessage("WARNING: Module destroyed! Evacuating...");
+            astronaut->setCurrentModule(spaceStation->getStartModule());
+            logger->writeEntry("Module destroyed. Astronaut evacuated.");
+        }
 
         if (checkDefeatCondition()) {
             logger->writeEntry("[TURN " + std::to_string(currentTurn) + "] MISSION FAILED");
@@ -175,18 +203,107 @@ void Simulation::runSimulation(GameUI& ui) {
     }
 }
 
-void Simulation::triggerRandomEvent() {
-    int act= rand() % 100 + 1;
-    if (act <=25) {
+void Simulation::triggerRandomEvent(GameUI& ui) {
+    int act = rand() % 100 + 1;
+    if (act <= 25) {
         int eventType = rand() % 4;
         switch (eventType) {
-            case 0: { MeteorStrike e; e.execute(*astronaut); logger->writeEntry("EVENT: " + e.getDescription()); break; }
-            case 1: { Fire e; e.execute(*astronaut); logger->writeEntry("EVENT: " + e.getDescription()); break; }
-            case 2: { OxygenLeak e; e.execute(*astronaut); logger->writeEntry("EVENT: " + e.getDescription()); break; }
-            case 3: { PowerFailure e; e.execute(*astronaut); logger->writeEntry("EVENT: " + e.getDescription()); break; }
+            case 0: {
+                MeteorStrike e;
+                e.execute(*astronaut);
+                std::string desc = e.getDescription();
+                if (!desc.empty()) {
+                    logger->writeEntry("EVENT: " + desc);
+                    ui.showMessage("==================");
+                    ui.showMessage("WARNING: " + desc);
+                    ui.showMessage("==================");
+                    ui.showMessage("Repair module manually? Costs 5 HP. (1=Yes, 0=No)");
+                    int rep;
+                    std::cin >> rep;
+                    if (std::cin.fail()) { std::cin.clear(); std::cin.ignore(1000, '\n'); rep = 0; }
+                    if (rep == 1 && astronaut->getCurrentModule() != nullptr) {
+                        astronaut->getCurrentModule()->setIntegrity(astronaut->getCurrentModule()->getIntegrity() + 10);
+                        astronaut->applyDamage(5);
+                        ui.showMessage("Module repaired. You lost 5 HP.");
+                        logger->writeEntry("Player repaired module manually.");
+                    } else {
+                        ui.showMessage("Repair skipped.");
+                    }
+                }
+                break;
+            }
+            case 1: {
+                Fire e;
+                e.execute(*astronaut);
+                std::string desc = e.getDescription();
+                if (!desc.empty()) {
+                    logger->writeEntry("EVENT: " + desc);
+                    ui.showMessage("==================");
+                    ui.showMessage("WARNING: " + desc);
+                    ui.showMessage("==================");
+                    ui.showMessage("Repair module manually? Costs 5 HP. (1=Yes, 0=No)");
+                    int rep;
+                    std::cin >> rep;
+                    if (std::cin.fail()) { std::cin.clear(); std::cin.ignore(1000, '\n'); rep = 0; }
+                    if (rep == 1 && astronaut->getCurrentModule() != nullptr) {
+                        astronaut->getCurrentModule()->setIntegrity(astronaut->getCurrentModule()->getIntegrity() + 10);
+                        astronaut->applyDamage(5);
+                        ui.showMessage("Module repaired. You lost 5 HP.");
+                        logger->writeEntry("Player repaired module manually.");
+                    } else {
+                        ui.showMessage("Repair skipped.");
+                    }
+                }
+                break;
+            }
+            case 2: {
+                OxygenLeak e;
+                e.execute(*astronaut);
+                std::string desc = e.getDescription();
+                if (!desc.empty()) {
+                    logger->writeEntry("EVENT: " + desc);
+                    ui.showMessage("==================");
+                    ui.showMessage("WARNING: " + desc);
+                    ui.showMessage("==================");
+                    ui.showMessage("Repair module manually? Costs 5 HP. (1=Yes, 0=No)");
+                    int rep;
+                    std::cin >> rep;
+                    if (std::cin.fail()) { std::cin.clear(); std::cin.ignore(1000, '\n'); rep = 0; }
+                    if (rep == 1 && astronaut->getCurrentModule() != nullptr) {
+                        astronaut->getCurrentModule()->setIntegrity(astronaut->getCurrentModule()->getIntegrity() + 10);
+                        astronaut->applyDamage(5);
+                        ui.showMessage("Module repaired. You lost 5 HP.");
+                        logger->writeEntry("Player repaired module manually.");
+                    } else {
+                        ui.showMessage("Repair skipped.");
+                    }
+                }
+                break;
+            }
+            case 3: {
+                PowerFailure e;
+                e.execute(*astronaut);
+                std::string desc = e.getDescription();
+                if (!desc.empty()) {
+                    logger->writeEntry("EVENT: " + desc);
+                    ui.showMessage("==================");
+                    ui.showMessage("WARNING: " + desc);
+                    ui.showMessage("==================");
+                    ui.showMessage("Repair module manually? Costs 5 HP. (1=Yes, 0=No)");
+                    int rep;
+                    std::cin >> rep;
+                    if (std::cin.fail()) { std::cin.clear(); std::cin.ignore(1000, '\n'); rep = 0; }
+                    if (rep == 1 && astronaut->getCurrentModule() != nullptr) {
+                        astronaut->getCurrentModule()->setIntegrity(astronaut->getCurrentModule()->getIntegrity() + 10);
+                        astronaut->applyDamage(5);
+                        ui.showMessage("Module repaired. You lost 5 HP.");
+                        logger->writeEntry("Player repaired module manually.");
+                    } else {
+                        ui.showMessage("Repair skipped.");
+                    }
+                }
+                break;
+            }
         }
     }
-
 }
-
-
