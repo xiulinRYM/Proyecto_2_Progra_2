@@ -45,3 +45,15 @@ void SpaceStation::CalculateSystemStatus() {
         totalIntegrity_ += m.second->getIntegrity();
     }
 }
+
+void SpaceStation::setStartModule(Module *module) {
+    if (module != nullptr) {
+        startModule_ = module;
+    }
+}
+
+Module *SpaceStation::getStartModule() const {
+    return startModule_;
+}
+
+
