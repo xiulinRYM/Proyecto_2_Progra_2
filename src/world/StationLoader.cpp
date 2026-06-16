@@ -97,42 +97,7 @@ void StationLoader::loadItemsData(const std::string& filename, SpaceStation &sta
     }
 }
 
-void StationLoader::loadEventsData(const std::string &filename, SpaceStation &station) {
-    std::ifstream file_(filename);
-    if (!file_.is_open()) {
-        std::cerr << "Error opening file: " << filename << std::endl;
-        return;
-    }
-    std::string line;
-    while (std::getline(file_, line)) {
-        std::stringstream s(line);
-        std::string type, moduleName, event_;
 
-        getline(s, type, ';');
-        getline(s, moduleName, ';');
-        getline(s, event_, ';');
-
-        if (!moduleName.empty() && moduleName.back() == '\r') {
-            moduleName.pop_back();
-        }
-        if (!event_.empty() && event_.back() == '\r') {
-            event_.pop_back();
-        }
-
-        if (type == "EVENT") {
-            try{
-                std::unique_ptr<Event> event = EventFactory::create(event_);
-                if (Module* m = station.getModule(moduleName); m != nullptr) {
-                    m->addEvent(std::move(event));
-                } else {
-                    std::cerr << "Module not found for event: " << moduleName << std::endl;
-                }
-            } catch (const std::exception& e) {
-                std::cerr << "Error creando event '" << event_ << "': " << e.what() << std::endl;
-            }
-        }
-    }
-}
 
 std::string StationLoader::loadStartData(const std::string &filename) {
     std::ifstream file_(filename);
@@ -164,5 +129,4 @@ void StationLoader::load(const std::string &filename, SpaceStation &station) {
     loadModulesData(filename, station);
     loadConnectionsData(filename, station);
     loadItemsData(filename, station);
-    loadEventsData(filename, station);
 }
