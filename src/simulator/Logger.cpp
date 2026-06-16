@@ -33,7 +33,7 @@ void Logger::exportToFile() const {
     file<<"==================="<<std::endl;
     file<<" Total events: "<<eventLog.size()<<std::endl;
     file.close();
-    std::cout << " Report generated successfully!" << std::endl;
+    std::cout << "Report generated successfully!" << std::endl;
 }
 const std::vector<std::string>& Logger::getLog() const {
     return eventLog;

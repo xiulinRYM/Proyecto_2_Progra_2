@@ -21,13 +21,13 @@ bool SpaceStation::isOperational() const {
     if (stationMap_.empty()) {
         return false;
     }
-    int x = 0;
+    size_t x = 0;
     for (const auto& m : stationMap_) {
         if (m.second->isDestroyed()) {
             x += 1;
         }
     }
-    if (x > (int)stationMap_.size() / 2) {
+    if (x > stationMap_.size() / 2) {
         return false;
     }
     return true;
