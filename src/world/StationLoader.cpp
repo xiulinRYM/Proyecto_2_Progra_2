@@ -5,6 +5,7 @@
 #include "world/StationLoader.h"
 #include "world/Module.h"
 #include "astronaut/items/Item.h"
+#include "astronaut/items/ItemFactory.h"
 
 void StationLoader::loadModulesData(std::string filename, SpaceStation &station) {
     std::ifstream file_(filename);
@@ -68,7 +69,7 @@ void StationLoader::loadItemsData(std::string filename, SpaceStation &station) {
         getline(s, item_, ';');
 
         if (type == "ITEM") {
-            std::unique_ptr<Item> item = ItemFactory::createItem(item_);
+            std::unique_ptr<Item> item = ItemFactory::create(item_);
             if (item != nullptr) {
                 if (Module* m = station.getModule(moduleName); m != nullptr) {
                     m->addItem(std::move(item));
@@ -95,7 +96,7 @@ std::string StationLoader::loadStartData(const std::string &filename) {
     return "";
 }
 
-void StationLoader::load(std::string filename, SpaceStation &station) {
+void StationLoader::load(const std::string &filename, SpaceStation &station) {
     loadModulesData(filename, station);
     loadConnectionsData(filename, station);
     loadItemsData(filename, station);

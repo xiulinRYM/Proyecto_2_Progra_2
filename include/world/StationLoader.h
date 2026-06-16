@@ -7,10 +7,12 @@
 class StationLoader {
     static void loadModulesData(std::string filename, SpaceStation& station);
     static void loadConnectionsData(std::string filename, SpaceStation& station);
-    void loadItemsData(std::string filename, SpaceStation& station);
+
+    static void loadItemsData(std::string filename, SpaceStation& station);
 public:
     StationLoader() = default;
-    void load(std::string filename, SpaceStation& station);
+
+    static void load(const std::string &filename, SpaceStation& station);
     static std::string loadStartData(const std::string &filename);
 };
 
