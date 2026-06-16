@@ -6,6 +6,8 @@
 #include <iostream>
 //#include "world/Module.h"
 #include "../../include/world/Module.h"
+#include <cstdlib>
+#include <ctime>
 
 Simulation::Simulation(Astronaut* astronaut, SpaceStation* spaceStation, int maxTurns) {
     this->astronaut = astronaut;
@@ -16,6 +18,7 @@ Simulation::Simulation(Astronaut* astronaut, SpaceStation* spaceStation, int max
     this->isRunning = true;
     this->logger = new Logger("report.txt");
     this->reportGenerator = new ReportGenerator("finalReport.txt");
+    srand(time(nullptr));
 }
 
 Simulation::~Simulation() {
@@ -53,9 +56,15 @@ void Simulation::processTurn(int choice, GameUI& ui) {
                 std::cout << "Select item: ";
                 int op;
                 std::cin >> op;
-                std::string itemName = astronaut->getInventory()->getItem(op-1)->getName();
-                astronaut->useItem(op-1);
-                entry += "Astronaut used " + itemName;
+                if (op >= 1 && op <= (int)astronaut->getInventory()->getSize()) {
+                    std::string itemName = astronaut->getInventory()->getItem(op-1)->getName();
+                    astronaut->useItem(op-1);
+                    entry += "Astronaut used " + itemName;
+                }
+                else {
+                    ui.showMessage("Invalid selection.");
+                }
+
             } else {
                 ui.showMessage("Inventory is empty.");
             }
@@ -74,7 +83,12 @@ void Simulation::processTurn(int choice, GameUI& ui) {
                 std::cout << "Select item number to take (0 to skip): " << std::endl;
                 std::cin >> op;
                 if (op >= 1 && op <= (int)items.size()) {
-                    astronaut->getCurrentModule()->extractItem(items[op-1]);
+                    std::string takenName = items[op-1]->getName();
+                    auto extracted = astronaut->getCurrentModule()->extractItem(items[op-1]);
+                    if (extracted) {
+                        astronaut->takeItem(std::move(extracted));
+                        entry += "Astronaut took " + takenName;
+                    }
                 }
             }
             entry += "Astronaut inspected module: " + caseNameModule();
@@ -133,6 +147,7 @@ void Simulation::runSimulation(GameUI& ui) {
 
         int choice = ui.getPlayerInput();
         processTurn(choice, ui);
+        triggerRandomEvent();
 
         if (checkDefeatCondition()) {
             logger->writeEntry("[TURN " + std::to_string(currentTurn) + "] MISSION FAILED");
@@ -158,6 +173,20 @@ void Simulation::runSimulation(GameUI& ui) {
         ui.showMessage("Maximum turns reached. Mission ended.");
         endSimulation(ui);
     }
+}
+
+void Simulation::triggerRandomEvent() {
+    int act= rand() % 100 + 1;
+    if (act <=25) {
+        int eventType = rand() % 4;
+        switch (eventType) {
+            case 0: { MeteorStrike e; e.execute(*astronaut); logger->writeEntry("EVENT: " + e.getDescription()); break; }
+            case 1: { Fire e; e.execute(*astronaut); logger->writeEntry("EVENT: " + e.getDescription()); break; }
+            case 2: { OxygenLeak e; e.execute(*astronaut); logger->writeEntry("EVENT: " + e.getDescription()); break; }
+            case 3: { PowerFailure e; e.execute(*astronaut); logger->writeEntry("EVENT: " + e.getDescription()); break; }
+        }
+    }
+
 }
 
 
