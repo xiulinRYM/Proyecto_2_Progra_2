@@ -1,7 +1,4 @@
 #include "../../include/world/SpaceStation.h"
-#include <fstream>
-#include <iostream>
-#include <sstream>
 
 SpaceStation::SpaceStation() : totalIntegrity_(100) {}
 
@@ -43,83 +40,4 @@ void SpaceStation::CalculateSystemStatus() {
     for (const auto& m : stationMap_) {
         totalIntegrity_ += m.second->getIntegrity();
     }
-}
-
-void SpaceStation::loadModuleData(const std::string &file) {
-    std::ifstream file_(file);
-    if (!file_.is_open()) {
-        std::cerr << "Error opening file: " << file << std::endl;
-        return;
-    }
-    std::string line;
-    while (std::getline(file_, line)) {
-        std::stringstream s(line);
-        std::string type, moduleName;
-
-        getline(s, type, ';');
-        getline(s, moduleName, ';' );
-
-        if (type == "MODULE") {
-            auto* m = new Module(moduleName);
-            stationMap_[moduleName] = m;
-        }
-    }
-}
-
-void SpaceStation::loadConnectionsData(const std::string &file) {
-    std::ifstream file_(file);
-    if (!file_.is_open()) {
-        std::cerr << "Error opening file: " << file << std::endl;
-        return;
-    }
-    std::string line;
-    while (std::getline(file_, line)) {
-        std::stringstream s(line);
-        std::string type, module1, module2;
-
-        getline(s, type, ';');
-        getline(s, module1, ';' );
-        getline(s, module2, ';' );
-
-        if (type == "CONNECTION") {
-            Module* m1 = getModule(module1);
-            if (Module* m2 = getModule(module2); m1 != nullptr && m2 != nullptr) {
-                m1->addConnection(m2);
-                m2->addConnection(m1);
-            }
-        }
-    }
-}
-
-void SpaceStation::loadStationData(const std::string& file) {
-    loadModuleData(file);
-    loadConnectionsData(file);
-}
-
-void SpaceStation::loadItemsData(const std::string &file) {
-    void SpaceStation::loadItemsData(const std::string &file) {
-        std::ifstream file_(filename);
-        if (!file_.is_open()) {
-            std::cerr << "Error opening file: " << file << std::endl;
-            return;
-        }
-
-        std::string line;
-        while (std::getline(file_, line)) {
-            std::stringstream s(line);
-            std::string type, moduleName, itemName;
-
-            getline(s, type, ';');
-            getline(s, moduleName, ';');
-            getline(s, itemName, ';');
-
-            if (type == "ITEM") {
-                std::unique_ptr<Item> item = ItemFactory::createItem(itemName);
-                if (item != nullptr) {
-                    if (Module* m = getModule(moduleName); m != nullptr) {
-                        m->addItem(std::move(item));
-                    }
-                }
-            }
-        }
 }
