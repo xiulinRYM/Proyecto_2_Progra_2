@@ -10,7 +10,7 @@
 class RepairTool:public Item
 {
     public:
-    RepairTool():Item("Access Card"){}
+    RepairTool():Item("Repair Tool"){}
     void use(Astronaut& astronaut) override;
     ~RepairTool()override=default;
 };
