@@ -27,7 +27,7 @@ bool SpaceStation::isOperational() const {
             x += 1;
         }
     }
-    if (x > stationMap_.size()/2) {
+    if (x > (int)stationMap_.size() / 2) {
         return false;
     }
     return true;
