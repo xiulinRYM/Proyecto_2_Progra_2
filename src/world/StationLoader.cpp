@@ -25,7 +25,7 @@ void StationLoader::loadModulesData(const std::string& filename, SpaceStation &s
 
         if (type == "MODULE") {
             auto* m = new Module(moduleName);
-            station.addModule(m);
+            station.addModule(std::make_unique<Module>(moduleName));
         }
     }
 }
