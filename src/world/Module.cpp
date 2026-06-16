@@ -62,7 +62,7 @@ bool Module::isDestroyed() const {
     return integrity_ <= 0;
 }
 
-std::vector<std::string> Module::triggerEvent(Astronaut* a) {
+std::vector<std::string> Module::triggerEvent(Astronaut* a) const {
     std::vector<std::string> descriptions;
     for (const auto& event : activeEvents_) {
         event->execute(*a);
@@ -75,17 +75,17 @@ void Module::addEvent(std::unique_ptr<Event> event) {
     activeEvents_.push_back(std::move(event));
 }
 
-int Module::getActiveEventCount() const {
+size_t Module::getActiveEventCount() const {
     return activeEvents_.size();
 }
 
 void Module::resolveEvent(const int index) {
-    if (index < 0 || index >= (int)activeEvents_.size()) return;
+    if (index < 0 || index >= static_cast<int>(activeEvents_.size())) return;
     activeEvents_[index]->resolve();
     activeEvents_.erase(activeEvents_.begin() + index);
 }
 
-std::string Module::getActiveEventDescription(int index) const {
-    if (index < 0 || index >= (int)activeEvents_.size()) return "";
-    return activeEvents_[index]->getDescription();
+std::string Module::getActiveEventDescription(const int index) const {
+    if (index < 0 || index >= static_cast<int>(activeEvents_.size())) return "";
+        return activeEvents_[index]->getDescription();
 }
