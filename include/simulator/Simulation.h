@@ -12,6 +12,11 @@
 #include "../astronaut/Astronaut.h"
 #include "../interface/GameUI.h"
 #include "../world/SpaceStation.h"
+#include"../events/Event.h"
+#include "../events/Fire.h"
+#include "../events/MeteorStrike.h"
+#include "../events/OxygenLeak.h"
+#include "../events/PowerFailure.h"
 
 class Simulation {
 public:
@@ -29,6 +34,7 @@ private:
     ReportGenerator* reportGenerator;
     SpaceStation* spaceStation;
 
+    void triggerRandomEvent();
     void processTurn(int choice, GameUI& ui);
     bool checkDefeatCondition() const;
     bool checkVictoryCondition() const;
