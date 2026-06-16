@@ -24,7 +24,6 @@ void StationLoader::loadModulesData(const std::string& filename, SpaceStation &s
             moduleName.pop_back();
 
         if (type == "MODULE") {
-            auto* m = new Module(moduleName);
             station.addModule(std::make_unique<Module>(moduleName));
         }
     }
@@ -84,12 +83,16 @@ void StationLoader::loadItemsData(const std::string& filename, SpaceStation &sta
         }
 
         if (type == "ITEM") {
+            try{
             std::unique_ptr<Item> item = ItemFactory::create(item_);
-            if (item != nullptr) {
-                if (Module* m = station.getModule(moduleName); m != nullptr) {
-                    m->addItem(std::move(item));
-                }
+            if (Module* m = station.getModule(moduleName); m != nullptr) {
+                m->addItem(std::move(item));
+            } else {
+                std::cerr << "Module not found for item: " << moduleName << std::endl;
             }
+        } catch (const std::exception& e) {
+            std::cerr << "Error creando item '" << item_ << "': " << e.what() << std::endl;
+        }
         }
     }
 }
