@@ -34,7 +34,7 @@ private:
     ReportGenerator* reportGenerator;
     SpaceStation* spaceStation;
 
-    void triggerRandomEvent();
+    void triggerRandomEvent(GameUI& ui);
     void processTurn(int choice, GameUI& ui);
     bool checkDefeatCondition() const;
     bool checkVictoryCondition() const;
