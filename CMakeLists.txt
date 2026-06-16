@@ -17,6 +17,7 @@ add_executable(Proyecto_2_Progra_2
         src/astronaut/items/OxygenTank.cpp
         src/astronaut/items/RepairKit.cpp
         src/astronaut/items/RepairTool.cpp
+        src/astronaut/items/ItemFactory.cpp
 
         # Events
         src/events/Fire.cpp
@@ -27,6 +28,7 @@ add_executable(Proyecto_2_Progra_2
         # World
         src/world/Module.cpp
         src/world/SpaceStation.cpp
+        src/world/StationLoader.cpp
 
         # Simulator
         src/simulator/Logger.cpp
