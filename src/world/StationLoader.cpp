@@ -7,7 +7,7 @@
 #include "astronaut/items/Item.h"
 #include "astronaut/items/ItemFactory.h"
 
-void StationLoader::loadModulesData(std::string filename, SpaceStation &station) {
+void StationLoader::loadModulesData(const std::string& filename, SpaceStation &station) {
     std::ifstream file_(filename);
     if (!file_.is_open()) {
         std::cerr << "Error opening file: " << filename << std::endl;
@@ -20,6 +20,8 @@ void StationLoader::loadModulesData(std::string filename, SpaceStation &station)
 
         getline(s, type, ';');
         getline(s, moduleName, ';' );
+        if (!moduleName.empty() && moduleName.back() == '\r')
+            moduleName.pop_back();
 
         if (type == "MODULE") {
             auto* m = new Module(moduleName);
@@ -28,7 +30,7 @@ void StationLoader::loadModulesData(std::string filename, SpaceStation &station)
     }
 }
 
-void StationLoader::loadConnectionsData(std::string filename, SpaceStation &station) {
+void StationLoader::loadConnectionsData(const std::string& filename, SpaceStation &station) {
     std::ifstream file_(filename);
     if (!file_.is_open()) {
         std::cerr << "Error opening file: " << filename << std::endl;
@@ -42,6 +44,12 @@ void StationLoader::loadConnectionsData(std::string filename, SpaceStation &stat
         getline(s, type, ';');
         getline(s, module1, ';' );
         getline(s, module2, ';' );
+        if (!module1.empty() && module1.back() == '\r') {
+            module1.pop_back();
+        }
+        if (!module2.empty() && module2.back() == '\r') {
+            module2.pop_back();
+        }
 
         if (type == "CONNECTION") {
             Module* m1 = station.getModule(module1);
@@ -53,7 +61,7 @@ void StationLoader::loadConnectionsData(std::string filename, SpaceStation &stat
     }
 }
 
-void StationLoader::loadItemsData(std::string filename, SpaceStation &station) {
+void StationLoader::loadItemsData(const std::string& filename, SpaceStation &station) {
     std::ifstream file_(filename);
     if (!file_.is_open()) {
         std::cerr << "Error opening file: " << filename << std::endl;
@@ -67,6 +75,13 @@ void StationLoader::loadItemsData(std::string filename, SpaceStation &station) {
         getline(s, type, ';');
         getline(s, moduleName, ';');
         getline(s, item_, ';');
+
+        if (!moduleName.empty() && moduleName.back() == '\r') {
+            moduleName.pop_back();
+        }
+        if (!item_.empty() && item_.back() == '\r') {
+            item_.pop_back();
+        }
 
         if (type == "ITEM") {
             std::unique_ptr<Item> item = ItemFactory::create(item_);
@@ -82,12 +97,21 @@ void StationLoader::loadItemsData(std::string filename, SpaceStation &station) {
 std::string StationLoader::loadStartData(const std::string &filename) {
     std::ifstream file_(filename);
     std::string line;
+    if (!file_.is_open()) {
+        std::cerr << "Error opening file: " << filename << std::endl;
+        return "";
+    }
 
     while (std::getline(file_, line)) {
         std::stringstream s(line);
         std::string type, startModule;
+
         getline(s, type, ';');
         getline(s, startModule, ';');
+
+        if (!startModule.empty() && startModule.back() == '\r') {
+            startModule.pop_back();
+        }
 
         if (type == "START") {
             return startModule;
