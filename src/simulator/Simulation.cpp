@@ -6,6 +6,7 @@
 #include <iostream>
 //#include "world/Module.h"
 #include "../../include/world/Module.h"
+#include <cstdlib>
 #include <ctime>
 
 Simulation::Simulation(Astronaut* astronaut, SpaceStation* spaceStation, int maxTurns) {

@@ -53,7 +53,7 @@ int GameUI::getPlayerInput() const {
 }
 
 void GameUI::showInventory(const Astronaut &astronaut) const {
-    if (!astronaut.getInventory()) {
+    if (astronaut.getInventory()->getSize()==0) {
         showMessage("Empty inventory");
     }else   for (int i = 0; i < astronaut.getInventory()->getSize(); i++) {
             std::cout<<" "<< i+1 <<". "<<astronaut.getInventory()->getItem(i)->getName()<<std::endl;
