@@ -1,0 +1,15 @@
+MODULE;Bridge
+MODULE;Laboratory
+MODULE;Engine_Room
+MODULE;Medical_Bay
+
+CONNECTION;Bridge;Laboratory
+CONNECTION;Bridge;Engine_Room
+CONNECTION;Laboratory;Medical_Bay
+
+ITEM;Bridge;EnergyCell
+ITEM;Laboratory;OxygenTank
+ITEM;Engine_Room;RepairTool
+ITEM;Medical_Bay;RepairKit
+
+START;Bridge
