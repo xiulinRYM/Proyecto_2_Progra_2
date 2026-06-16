@@ -12,11 +12,14 @@
 
 class GameUI {
 public:
-    void showStatus(const Astronaut& astronaut, SpaceStation& spaceStation, int currentTurn,int maxTurns) const;
-    void showMenu(const Astronaut& astronaut ) const;
-    void showMessage(const std::string& message) const;
-    void showInventory(const Astronaut& astronaut) const;
-    [[nodiscard]] int getPlayerInput() const;
+    void showStatus(const Astronaut& astronaut, SpaceStation& spaceStation, int currentTurn,int maxTurns) ;
+    void showMenu(const Astronaut& astronaut ) ;
+    void showMessage(const std::string& message) ;
+    void showInventory(const Astronaut& astronaut) ;
+    [[nodiscard]] int getPlayerInput() ;
+    [[nodiscard]] int getPlayerDecision() ;
+    void showConnectedModules(const std::vector<Module*>& modules) ;
+    void showModuleItems(const std::vector<Item*>& items) ;
 };
 
 

@@ -38,18 +38,9 @@ void Simulation::processTurn(int choice, GameUI& ui) {
                     ui.showMessage("No connected modules available.");
                     break;
                 }
-                for (int i = 0; i < connected.size(); i++) {
-                    std::cout << " " << i+1 << ". " << connected[i]->getName() << std::endl;
-                }
-                int op;
-                std::cout << "Select a module" << std::endl;
-                std::cin >> op;
-                if (std::cin.fail()) {
-                    std::cin.clear();
-                    std::cin.ignore(1000, '\n');
-                    ui.showMessage("Invalid input.");
-                    break;
-                }
+                ui.showConnectedModules(connected);
+                ui.showMessage("Select a module:");
+                int op = ui.getPlayerDecision();
                 if (op < 1 || op > (int)connected.size()) {
                     ui.showMessage("Invalid selection. Staying in current module.");
                     break;
@@ -63,15 +54,8 @@ void Simulation::processTurn(int choice, GameUI& ui) {
         case 2:
             if (astronaut->getInventory()->getSize() > 0) {
                 ui.showInventory(*astronaut);
-                std::cout << "Select item: ";
-                int op;
-                std::cin >> op;
-                if (std::cin.fail()) {
-                    std::cin.clear();
-                    std::cin.ignore(1000, '\n');
-                    ui.showMessage("Invalid input.");
-                    break;
-                }
+                ui.showMessage("Select Item");
+                int op = ui.getPlayerDecision();
                 if (op >= 1 && op <= (int)astronaut->getInventory()->getSize()) {
                     std::string itemName = astronaut->getInventory()->getItem(op-1)->getName();
                     astronaut->useItem(op-1);
@@ -88,21 +72,12 @@ void Simulation::processTurn(int choice, GameUI& ui) {
             if (astronaut->getCurrentModule() == nullptr) {
                 ui.showMessage("No current module.");
             } else {
-                std::cout << astronaut->getCurrentModule()->getName() << std::endl;
-                std::cout << astronaut->getCurrentModule()->getIntegrity() << std::endl;
+                ui.showMessage(astronaut->getCurrentModule()->getName());
+                ui.showMessage(std::to_string(astronaut->getCurrentModule()->getIntegrity()));
                 std::vector<Item*> items = astronaut->getCurrentModule()->getItems();
-                for (int i = 0; i < items.size(); i++) {
-                    std::cout << " " << i+1 << ". " << items[i]->getName() << std::endl;
-                }
-                int op;
-                std::cout << "Select item number to take (0 to skip): " << std::endl;
-                std::cin >> op;
-                if (std::cin.fail()) {
-                    std::cin.clear();
-                    std::cin.ignore(1000, '\n');
-                    ui.showMessage("Invalid input.");
-                    break;
-                }
+                ui.showModuleItems(items);
+                ui.showMessage("Select item number to take (0 to skip): ");
+                int op = ui.getPlayerDecision();
                 if (op >= 1 && op <= (int)items.size()) {
                     std::string takenName = items[op-1]->getName();
                     auto extracted = astronaut->getCurrentModule()->extractItem(items[op-1]);
@@ -234,9 +209,7 @@ void Simulation::triggerRandomEvent(GameUI& ui) {
     ui.showMessage("==================");
     ui.showMessage("Repair module manually? Costs 5 HP. (1=Yes, 0=No)");
 
-    int rep;
-    std::cin >> rep;
-    if (std::cin.fail()) { std::cin.clear(); std::cin.ignore(1000, '\n'); rep = 0; }
+  int rep = ui.getPlayerDecision();
 
     if (rep == 1 && astronaut->getCurrentModule() != nullptr) {
         astronaut->getCurrentModule()->setIntegrity(astronaut->getCurrentModule()->getIntegrity() + 10);
@@ -258,9 +231,7 @@ void Simulation::triggerRandomEvent(GameUI& ui) {
         while (i < mod->getActiveEventCount()) {
             ui.showMessage("Active event: " + mod->getActiveEventDescription(i));
             ui.showMessage("Repair? Costs 5 HP. (1=Yes, 2=Skip all, 0=Skip)");
-            int r;
-            std::cin >> r;
-            if (std::cin.fail()) { std::cin.clear(); std::cin.ignore(1000, '\n'); r = 0; }
+            int r = ui.getPlayerDecision();;
             if (r == 1) {
                 mod->resolveEvent(i);
                 astronaut->applyDamage(5);
