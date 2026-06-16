@@ -20,7 +20,7 @@ void Module::setIntegrity(const int integrity) {
     integrity_ = integrity;
 }
 
-std::string Module::getName() {
+std::string Module::getName() const {
     return name_;
 }
 

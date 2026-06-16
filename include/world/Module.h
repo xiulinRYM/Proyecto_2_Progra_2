@@ -19,10 +19,9 @@ public:
     void triggerEvent(Astronaut* a) const;
     [[nodiscard]] int getIntegrity() const;
     void setIntegrity(int integrity);
-    std::string getName();
-    std::vector<Item*> getItems() const;
+    [[nodiscard]] std::string getName() const;
+    [[nodiscard]] std::vector<Item*> getItems() const;
     std::vector<Module*> getConnectedModules();
     [[nodiscard]] bool isDestroyed() const;
-    void removeItem(Item* item);
     std::unique_ptr<Item> extractItem(const Item* item);
 };
