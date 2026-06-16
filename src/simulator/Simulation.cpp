@@ -245,6 +245,7 @@ void Simulation::triggerRandomEvent(GameUI& ui) {
             if (r == 1) {
                 if (astronaut->getEnergy() < 5) {
                     ui.showMessage("Not enough energy to repair!");
+                    i++;
                 } else {
                     mod->resolveEvent(i);
                     astronaut->applyDamage(5);
