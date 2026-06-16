@@ -14,6 +14,7 @@ class Module {
 
 public:
     explicit Module(std::string name);
+    ~Module();
     void addItem(std::unique_ptr<Item> item);
     void addConnection(Module* module);
     void triggerEvent(Astronaut* a) const;
