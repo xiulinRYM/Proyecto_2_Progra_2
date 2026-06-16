@@ -16,7 +16,7 @@ add_executable(Proyecto_2_Progra_2
         src/astronaut/items/EnergyCell.cpp
         src/astronaut/items/OxygenTank.cpp
         src/astronaut/items/RepairKit.cpp
-        src/astronaut/items/AccessCard.cpp
+        src/astronaut/items/RepairTool.cpp
 
         # Events
         src/events/Fire.cpp

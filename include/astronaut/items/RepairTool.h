@@ -7,12 +7,12 @@
 #include "Item.h"
 
 
-class AccessCard:public Item
+class RepairTool:public Item
 {
     public:
-    AccessCard():Item("Access Card"){}
+    RepairTool():Item("Access Card"){}
     void use(Astronaut& astronaut) override;
-    ~AccessCard()override=default;
+    ~RepairTool()override=default;
 };
 
 
