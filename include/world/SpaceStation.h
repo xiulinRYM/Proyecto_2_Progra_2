@@ -8,6 +8,7 @@ class SpaceStation {
     int totalIntegrity_;
 public:
     SpaceStation();
+    ~SpaceStation();
     Module* getModule(const std::string &moduleName);
     void addModule(Module* module);
     void CalculateSystemStatus();

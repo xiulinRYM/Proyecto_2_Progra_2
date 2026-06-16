@@ -2,6 +2,13 @@
 
 SpaceStation::SpaceStation() : totalIntegrity_(100) {}
 
+SpaceStation::~SpaceStation() {
+    for (auto& m : stationMap_) {
+        delete m.second;
+    }
+    stationMap_.clear();
+}
+
 Module* SpaceStation::getModule(const std::string &moduleName) {
     if (stationMap_.contains(moduleName)) {
         return stationMap_[moduleName];

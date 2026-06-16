@@ -4,6 +4,13 @@
 
 Module::Module(std::string name) : name_(std::move(name)), integrity_(100) {}
 
+Module::~Module() {
+    for (const Event* event : activeEvents_) {
+        delete event;
+    }
+    activeEvents_.clear();
+}
+
 void Module::addConnection(Module* module) {
     connectedModules_.push_back(module);
 }
