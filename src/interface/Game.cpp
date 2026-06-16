@@ -13,7 +13,7 @@ void Game::init() {
     astronaut_ = std::make_unique<Astronaut>();
     spaceStation_ = std::make_unique<SpaceStation>();
     ui_ = std::make_unique<GameUI>();
-    spaceStation_->loadStationData("station.json");
+    spaceStation_->loadStationData("station.txt");
     simulation_ = std::make_unique<Simulation>(astronaut_.get(), spaceStation_.get(), maxTurns_);
 
 }
