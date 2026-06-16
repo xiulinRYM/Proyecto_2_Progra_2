@@ -139,7 +139,6 @@ void Simulation::endSimulation(GameUI& ui) {
 
 void Simulation::runSimulation(GameUI& ui) {
     logger->writeHeader();
-    ui.showMessage("=== SIMULATION STARTED ===");
 
     while (isRunning && currentTurn <= maxTurns) {
         ui.showStatus(*astronaut, *spaceStation,currentTurn, maxTurns);
