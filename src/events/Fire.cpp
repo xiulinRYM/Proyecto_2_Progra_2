@@ -7,8 +7,7 @@ void Fire::execute(Astronaut& a)  {
         a.setHealth(a.getHealth() - 5);
         a.setOxygen(a.getOxygen() - 10);
 
-        Module* currentModule = a.getCurrentModule();
-        if (currentModule != nullptr) {
+        if (Module* currentModule = a.getCurrentModule(); currentModule != nullptr) {
             currentModule->setIntegrity(currentModule->getIntegrity() - 10);
         }
     }

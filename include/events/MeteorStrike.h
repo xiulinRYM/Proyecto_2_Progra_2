@@ -7,7 +7,7 @@ class Module;
 
 class MeteorStrike : public Event {
 public:
-    MeteorStrike() : Event("Impacto de meteorito detectado.") {}
+    MeteorStrike() : Event("Meteor strike detected.") {}
 
     void execute(Astronaut& a) override;
 };

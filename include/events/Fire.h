@@ -7,7 +7,7 @@ class Module;
 
 class Fire : public Event {
 public:
-    Fire() : Event("Incendio en el modulo.") {}
+    Fire() : Event("Fire detected in the module") {}
 
     void execute(Astronaut& a) override;
 };

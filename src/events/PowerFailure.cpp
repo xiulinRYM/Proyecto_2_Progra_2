@@ -5,8 +5,7 @@ void PowerFailure::execute(Astronaut& a)  {
     if (!isResolved) {
         a.setEnergy(a.getEnergy() - 20);
 
-        Module* currentModule = a.getCurrentModule();
-        if (currentModule != nullptr) {
+        if (Module* currentModule = a.getCurrentModule(); currentModule != nullptr) {
             currentModule->setIntegrity(currentModule->getIntegrity() - 5);
         }
     }

@@ -91,7 +91,7 @@ void StationLoader::loadItemsData(const std::string& filename, SpaceStation &sta
                 std::cerr << "Module not found for item: " << moduleName << std::endl;
             }
         } catch (const std::exception& e) {
-            std::cerr << "Error creando item '" << item_ << "': " << e.what() << std::endl;
+            std::cerr << "Error creating item '" << item_ << "': " << e.what() << std::endl;
         }
         }
     }

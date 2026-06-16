@@ -4,8 +4,7 @@
 
 void MeteorStrike::execute(Astronaut& a)  {
     if (!isResolved) {
-        Module* currentModule = a.getCurrentModule();
-        if (currentModule != nullptr) {
+        if (Module* currentModule = a.getCurrentModule(); currentModule != nullptr) {
             currentModule->setIntegrity(currentModule->getIntegrity() - 20);
         }
     }

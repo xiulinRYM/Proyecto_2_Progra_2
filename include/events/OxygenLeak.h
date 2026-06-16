@@ -7,7 +7,7 @@ class Module;
 
 class OxygenLeak : public Event {
 public:
-    OxygenLeak() : Event("Fuga de oxigeno detectada.") {}
+    OxygenLeak() : Event("Critical oxygen leak detected.") {}
 
     void execute(Astronaut& a) override;
 };

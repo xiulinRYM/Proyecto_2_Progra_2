@@ -5,8 +5,7 @@ void OxygenLeak::execute(Astronaut& a)  {
     if (!isResolved) {
         a.setOxygen(a.getOxygen() - 15);
 
-        Module* currentModule = a.getCurrentModule();
-        if (currentModule != nullptr) {
+        if (Module* currentModule = a.getCurrentModule(); currentModule != nullptr) {
             currentModule->setIntegrity(currentModule->getIntegrity() - 5);
         }
     }

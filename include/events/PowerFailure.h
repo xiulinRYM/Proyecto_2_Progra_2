@@ -7,7 +7,7 @@ class Module;
 
 class PowerFailure : public Event {
 public:
-    PowerFailure() : Event("Fallo critico de energia.") {}
+    PowerFailure() : Event("Critical energy failure.") {}
 
     void execute(Astronaut& a) override;
 };

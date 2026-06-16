@@ -2,6 +2,7 @@
 #define EVENT_H
 
 #include <string>
+#include <utility>
 class Astronaut;
 
 class Event {
@@ -10,7 +11,7 @@ protected:
     bool isResolved;
 
 public:
-    Event(std::string desc) : description(desc), isResolved(false) {}
+    explicit Event(std::string desc) : description(std::move(desc)), isResolved(false) {}
 
     virtual ~Event() = default;
 
