@@ -3,20 +3,17 @@
 SpaceStation::SpaceStation() : totalIntegrity_(100) {}
 
 SpaceStation::~SpaceStation() {
-    for (auto& m : stationMap_) {
-        delete m.second;
-    }
     stationMap_.clear();
 }
 
 Module* SpaceStation::getModule(const std::string &moduleName) {
     if (stationMap_.contains(moduleName)) {
-        return stationMap_[moduleName];
+        return stationMap_[moduleName].get();
     }
     return nullptr;
 }
 
-std::map<std::string, Module*> SpaceStation::getAllModules() {
+const std::map<std::string, std::unique_ptr<Module>>& SpaceStation::getAllModules() const {
     return stationMap_;
 }
 
@@ -36,9 +33,9 @@ bool SpaceStation::isOperational() const {
     return true;
 }
 
-void SpaceStation::addModule(Module* module) {
+void SpaceStation::addModule(std::unique_ptr<Module> module) {
     if (module != nullptr) {
-        stationMap_[module->getName()] = module;
+        stationMap_[module->getName()] = std::move(module);
     }
 }
 
@@ -48,3 +45,15 @@ void SpaceStation::CalculateSystemStatus() {
         totalIntegrity_ += m.second->getIntegrity();
     }
 }
+
+void SpaceStation::setStartModule(Module *module) {
+    if (module != nullptr) {
+        startModule_ = module;
+    }
+}
+
+Module *SpaceStation::getStartModule() const {
+    return startModule_;
+}
+
+

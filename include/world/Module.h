@@ -10,19 +10,20 @@ class Module {
     int integrity_;
     std::vector<Module*> connectedModules_;
     std::vector<std::unique_ptr<Item>> items_;
-    std::vector<Event*> activeEvents_;
+    std::vector<std::unique_ptr<Event>> activeEvents_;
 
 public:
     explicit Module(std::string name);
-    ~Module();
+    ~Module() = default;
     void addItem(std::unique_ptr<Item> item);
     void addConnection(Module* module);
-    void triggerEvent(Astronaut* a) const;
+    void triggerEvent(Astronaut* a);
     [[nodiscard]] int getIntegrity() const;
     void setIntegrity(int integrity);
     [[nodiscard]] std::string getName() const;
     [[nodiscard]] std::vector<Item*> getItems() const;
-    std::vector<Module*> getConnectedModules();
+    [[nodiscard]] std::vector<Module*> getConnectedModules() const;
     [[nodiscard]] bool isDestroyed() const;
     std::unique_ptr<Item> extractItem(const Item* item);
+    void addEvent(std::unique_ptr<Event> event);
 };

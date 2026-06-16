@@ -4,19 +4,18 @@
 
 Module::Module(std::string name) : name_(std::move(name)), integrity_(100) {}
 
-Module::~Module() {
-    for (const Event* event : activeEvents_) {
-        delete event;
-    }
-    activeEvents_.clear();
-}
-
 void Module::addConnection(Module* module) {
     connectedModules_.push_back(module);
 }
 
-std::vector<Module*> Module::getConnectedModules() {
-    return connectedModules_;
+std::vector<Module*> Module::getConnectedModules() const {
+    std::vector<Module*> result;
+    for (const auto& module : connectedModules_) {
+        if (module && !module->isDestroyed()) {
+            result.push_back(module);
+        }
+    }
+    return result;
 }
 
 int Module::getIntegrity() const {
@@ -63,8 +62,13 @@ bool Module::isDestroyed() const {
     return integrity_ <= 0;
 }
 
-void Module::triggerEvent(Astronaut *a) const {
-    for (Event* event : activeEvents_) {
+void Module::triggerEvent(Astronaut *a){
+    for (const auto& event : activeEvents_) {
         event->execute(*a);
     }
 }
+
+void Module::addEvent(std::unique_ptr<Event> event) {
+    activeEvents_.push_back(std::move(event));
+}
+

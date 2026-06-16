@@ -22,6 +22,7 @@ void Game::init() {
     const std::string startModuleName = loader.loadStartData("station.txt");
     if (Module* startModule = spaceStation_->getModule(startModuleName); startModule != nullptr) {
         astronaut_->setCurrentModule(startModule);
+        spaceStation_->setStartModule(startModule);
     } else {
         std::cerr << "Error: START module not found: " << startModuleName << std::endl;
     }

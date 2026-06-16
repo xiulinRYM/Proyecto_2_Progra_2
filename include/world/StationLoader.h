@@ -5,10 +5,10 @@
 #include <string>
 
 class StationLoader {
-    static void loadModulesData(std::string filename, SpaceStation& station);
-    static void loadConnectionsData(std::string filename, SpaceStation& station);
-
-    static void loadItemsData(std::string filename, SpaceStation& station);
+    static void loadModulesData(const std::string& filename, SpaceStation& station);
+    static void loadConnectionsData(const std::string& filename, SpaceStation& station);
+    static void loadEventsData(const std::string& filename, SpaceStation& station);
+    static void loadItemsData(const std::string& filename, SpaceStation& station);
 public:
     StationLoader() = default;
 

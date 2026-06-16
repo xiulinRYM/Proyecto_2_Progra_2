@@ -11,7 +11,7 @@ Logger::Logger(const std::string& fileName) {
 }
 void Logger::writeEntry(const std::string& entry) {
     eventLog.push_back(entry);
-    std::cout << entry<<std::endl;
+    std::cout << "[LOG] " << entry << std::endl;
 }
 
 void Logger::writeHeader() {
