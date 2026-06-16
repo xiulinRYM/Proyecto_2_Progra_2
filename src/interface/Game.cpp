@@ -5,6 +5,8 @@
 #include "../../include/interface/Game.h"
 #include <iostream>
 
+#include "world/StationLoader.h"
+
 
 Game::Game(int maxTurns) : maxTurns_(maxTurns)
 {}
@@ -13,7 +15,16 @@ void Game::init() {
     astronaut_ = std::make_unique<Astronaut>();
     spaceStation_ = std::make_unique<SpaceStation>();
     ui_ = std::make_unique<GameUI>();
-    spaceStation_->loadStationData("station.txt");
+
+    StationLoader loader;
+    loader.load("station.txt", *spaceStation_);
+
+    const std::string startModuleName = loader.loadStartData("station.txt");
+    if (Module* startModule = spaceStation_->getModule(startModuleName); startModule != nullptr) {
+        astronaut_->setCurrentModule(startModule);
+    } else {
+        std::cerr << "Error: START module not found: " << startModuleName << std::endl;
+    }
     simulation_ = std::make_unique<Simulation>(astronaut_.get(), spaceStation_.get(), maxTurns_);
 
 }
