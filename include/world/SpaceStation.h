@@ -11,6 +11,7 @@ public:
     void loadStationData(const std::string& file);
     void loadModuleData(const std::string& file);
     void loadConnectionsData(const std::string& file);
+    void loadItemsData(const std::string& file);
     Module* getModule(const std::string &moduleName);
     void addModule(Module* module);
     void CalculateSystemStatus();

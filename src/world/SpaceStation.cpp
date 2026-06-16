@@ -95,3 +95,31 @@ void SpaceStation::loadStationData(const std::string& file) {
     loadModuleData(file);
     loadConnectionsData(file);
 }
+
+void SpaceStation::loadItemsData(const std::string &file) {
+    void SpaceStation::loadItemsData(const std::string &file) {
+        std::ifstream file_(filename);
+        if (!file_.is_open()) {
+            std::cerr << "Error opening file: " << file << std::endl;
+            return;
+        }
+
+        std::string line;
+        while (std::getline(file_, line)) {
+            std::stringstream s(line);
+            std::string type, moduleName, itemName;
+
+            getline(s, type, ';');
+            getline(s, moduleName, ';');
+            getline(s, itemName, ';');
+
+            if (type == "ITEM") {
+                std::unique_ptr<Item> item = ItemFactory::createItem(itemName);
+                if (item != nullptr) {
+                    if (Module* m = getModule(moduleName); m != nullptr) {
+                        m->addItem(std::move(item));
+                    }
+                }
+            }
+        }
+}

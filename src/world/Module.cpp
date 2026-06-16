@@ -17,7 +17,12 @@ int Module::getIntegrity() const {
 }
 
 void Module::setIntegrity(const int integrity) {
-    integrity_ = integrity;
+    if (integrity < 0) {
+        integrity_ = 0;
+    } else if (integrity > 100) {
+        integrity_ = 100;
+    } else
+        integrity_ = integrity;
 }
 
 std::string Module::getName() const {

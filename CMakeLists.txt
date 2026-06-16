@@ -36,4 +36,6 @@ add_executable(Proyecto_2_Progra_2
         # Interface
         src/interface/Game.cpp
         src/interface/GameUI.cpp
+        include/world/StationLoader.h
+        src/world/StationLoader.cpp
 )
