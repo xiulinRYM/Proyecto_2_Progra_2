@@ -222,7 +222,7 @@ void Simulation::triggerRandomEvent(GameUI& ui) {
         } else {
             astronaut->getCurrentModule()->setIntegrity(astronaut->getCurrentModule()->getIntegrity() + 10);
             astronaut->applyDamage(5);
-            astronaut->applyEnergyDrain(5);
+            astronaut->applyEnergyDrain(10);
             ui.showMessage("Module repaired. You lost 5 HP and 5 Energy.");
             logger->writeEntry("Player repaired module manually.");
         }
@@ -249,7 +249,7 @@ void Simulation::triggerRandomEvent(GameUI& ui) {
                 } else {
                     mod->resolveEvent(i);
                     astronaut->applyDamage(5);
-                    astronaut->applyEnergyDrain(5);
+                    astronaut->applyEnergyDrain(10);
                     ui.showMessage("Event resolved. You lost 5 HP and 5 Energy.");
                     logger->writeEntry("Player resolved active event.");
                 }
