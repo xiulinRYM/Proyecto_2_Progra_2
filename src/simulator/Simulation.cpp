@@ -6,7 +6,6 @@
 #include <iostream>
 //#include "world/Module.h"
 #include "../../include/world/Module.h"
-#include <cstdlib>
 #include <ctime>
 
 Simulation::Simulation(Astronaut* astronaut, SpaceStation* spaceStation, int maxTurns) {
@@ -184,6 +183,7 @@ void Simulation::triggerRandomEvent() {
             case 1: { Fire e; e.execute(*astronaut); logger->writeEntry("EVENT: " + e.getDescription()); break; }
             case 2: { OxygenLeak e; e.execute(*astronaut); logger->writeEntry("EVENT: " + e.getDescription()); break; }
             case 3: { PowerFailure e; e.execute(*astronaut); logger->writeEntry("EVENT: " + e.getDescription()); break; }
+            default: break;
         }
     }
 
