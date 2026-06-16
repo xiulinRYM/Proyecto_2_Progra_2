@@ -17,7 +17,7 @@ public:
 
     virtual void execute(Astronaut& a) = 0;
 
-    std::string getDescription() { return description; }
+    [[nodiscard]] std::string getDescription() const { return description; }
     void resolve() { isResolved = true; }
 };
 

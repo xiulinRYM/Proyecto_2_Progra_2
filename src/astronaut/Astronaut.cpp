@@ -55,7 +55,7 @@ void Astronaut::applyDamage(int amount)
 
 bool Astronaut::isAlive() const
 {
-    return health_>0;
+    return health_>0&&oxygen_>0;
 }
 
 Module* Astronaut::getCurrentModule() const
@@ -111,6 +111,16 @@ void Astronaut::useItem(int pos)
     }
     item->use(*this);
     inventory_->removeItem(pos);
+}
+
+void Astronaut::applyEnergyDrain(int amount)
+{
+    setEnergy(getEnergy()-amount);
+}
+
+void Astronaut::applyOxygenDrain(int amount)
+{
+    setOxygen(getOxygen()-amount);
 }
 
 

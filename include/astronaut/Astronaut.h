@@ -31,7 +31,8 @@ class Astronaut
     void setEnergy(int value);
     void applyDamage(int amount);
     ~Astronaut()=default;
-
+    void applyEnergyDrain(int amount);
+    void applyOxygenDrain(int amount);
     private:
 
     Module* currentModule_;
