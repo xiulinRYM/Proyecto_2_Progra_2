@@ -17,7 +17,7 @@ public:
     ~Module() = default;
     void addItem(std::unique_ptr<Item> item);
     void addConnection(Module* module);
-    [[nodiscard]] std::vector<std::string> triggerEvent(Astronaut* a);
+    [[nodiscard]] std::vector<std::string> triggerEvent(Astronaut* a) const;
     [[nodiscard]] int getIntegrity() const;
     void setIntegrity(int integrity);
     [[nodiscard]] std::string getName() const;
@@ -26,7 +26,7 @@ public:
     [[nodiscard]] bool isDestroyed() const;
     std::unique_ptr<Item> extractItem(const Item* item);
     void addEvent(std::unique_ptr<Event> event);
-    [[nodiscard]] int getActiveEventCount() const;
+    [[nodiscard]] size_t getActiveEventCount() const;
     void resolveEvent(int index);
     [[nodiscard]] std::string getActiveEventDescription(int index) const;
 };
