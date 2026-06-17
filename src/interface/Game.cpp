@@ -16,6 +16,8 @@ void Game::init() {
     spaceStation_ = std::make_unique<SpaceStation>();
     ui_ = std::make_unique<GameUI>();
 
+    std::cout << "Loading station... " << std::endl << std::endl;
+
     StationLoader loader;
     loader.load("station.txt", *spaceStation_);
 

@@ -14,6 +14,7 @@ void StationLoader::loadModulesData(const std::string& filename, SpaceStation &s
         return;
     }
     std::string line;
+    int moduleCount = 0;
     while (std::getline(file_, line)) {
         std::stringstream s(line);
         std::string type, moduleName;
@@ -25,8 +26,10 @@ void StationLoader::loadModulesData(const std::string& filename, SpaceStation &s
 
         if (type == "MODULE") {
             station.addModule(std::make_unique<Module>(moduleName));
+            moduleCount++;
         }
     }
+    std::cout << "Loaded modules: " << moduleCount << std::endl;
 }
 
 void StationLoader::loadConnectionsData(const std::string& filename, SpaceStation &station) {
@@ -36,6 +39,7 @@ void StationLoader::loadConnectionsData(const std::string& filename, SpaceStatio
         return;
     }
     std::string line;
+    int connectionCount = 0;
     while (std::getline(file_, line)) {
         std::stringstream s(line);
         std::string type, module1, module2;
@@ -52,12 +56,14 @@ void StationLoader::loadConnectionsData(const std::string& filename, SpaceStatio
 
         if (type == "CONNECTION") {
             Module* m1 = station.getModule(module1);
+            connectionCount++;
             if (Module* m2 = station.getModule(module2); m1 != nullptr && m2 != nullptr) {
                 m1->addConnection(m2);
                 m2->addConnection(m1);
             }
         }
     }
+    std::cout << "Loaded connections: " << connectionCount<< std::endl;
 }
 
 void StationLoader::loadItemsData(const std::string& filename, SpaceStation &station) {
@@ -67,6 +73,7 @@ void StationLoader::loadItemsData(const std::string& filename, SpaceStation &sta
         return;
     }
     std::string line;
+    int itemCount = 0;
     while (std::getline(file_, line)) {
         std::stringstream s(line);
         std::string type, moduleName, item_;
@@ -85,6 +92,7 @@ void StationLoader::loadItemsData(const std::string& filename, SpaceStation &sta
         if (type == "ITEM") {
             try{
             std::unique_ptr<Item> item = ItemFactory::create(item_);
+            itemCount++;
             if (Module* m = station.getModule(moduleName); m != nullptr) {
                 m->addItem(std::move(item));
             } else {
@@ -95,6 +103,7 @@ void StationLoader::loadItemsData(const std::string& filename, SpaceStation &sta
         }
         }
     }
+    std::cout << "Loaded items: " << itemCount << std::endl << std::endl;
 }
 
 
